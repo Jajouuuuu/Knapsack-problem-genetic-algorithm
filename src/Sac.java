@@ -1,5 +1,7 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 class Sac {
     // Ca c'est les objets qui peuvent être mit dans le sac
@@ -45,17 +47,27 @@ class Sac {
     }
 
     // Notre méthode de mutation je pense qu'elle doit être là, j'ai quelque idées mais pas certaines de moi pour l'instant
-    // donc je vais push des méthodes vide concernant l'algo génétique pour le moment
-    public void mutation(int poidsMaximum){
-
+    // En gros on switch de manière aléatoire 1 et 0 (présence de l'objet dans le sac) en checkant la contrainte de poids
+    // Et on fait ça de manière complètement random mais je suis pas sûre de moi cette fonction doit être à changer
+    public void mutation(int poidsMaximum) {
+        Random rand = new Random();
+        for (int i = 0; i < this.liste.size(); i++) {
+            if (rand.nextDouble() < 0.1) {
+                if (this.liste.get(i) == 1) {
+                    this.supprimeObjet(i);
+                } else if (this.poids + this.objets.get(i).poids <= poidsMaximum) {
+                    this.ajouteObjet(i);
+                }
+            }
+        }
     }
 
     // ça c'est pour savoir si une configuration d'un sac est meilleur qu'un autre (genre pour comparer deux solution de sac quoi
     // ça compare l'objet apelant avec celui en paramètre
     public boolean estMeilleur(Sac autre, int poidsMaximum){
         if (this.valeur > autre.valeur) return true;
-        if (this.valeur < autre.valeur) return false;
-        return this.poids <= poidsMaximum && this.poids < autre.poids;
+        else if (this.valeur == autre.valeur) return this.poids <= poidsMaximum;
+        return false;
     }
 
     // Bon ça c'est un ptit plus comme je passe jamais par des copy d'élément mais je sais qu'Alice oui mdr
