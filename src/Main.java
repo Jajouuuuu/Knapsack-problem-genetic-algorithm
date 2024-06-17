@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -20,15 +19,20 @@ public class Main {
         System.out.println(sac);
         sac.supprimeObjet(1);
         System.out.println(sac);*/
-        int poidsMaximum = 348;
-        List<Integer> poids = List.of(95, 4, 60, 32, 23, 72, 80, 62, 65, 46);
-        List<Integer> profits = List.of(55, 10, 47, 5, 4, 50, 8, 61, 85, 87);
-        ApplicationGenetique algo = new ApplicationGenetique(poidsMaximum, poids, profits);
-        int taillePopulation = 50;
-        int nombreDeGenerations = 100;
-        List<Sac> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations);
-        for (Sac sac : resultats) {
-            System.out.println(sac);
+        List<Integer> maximumCost = List.of(100, 10, 70, 40, 30, 80, 90, 70, 75, 50);
+        List<List<Integer>> costs = List.of(
+                List.of(95, 4, 60, 32, 23, 72, 80, 62, 65, 46),
+                List.of(2, 4, 6, 3, 2, 7, 8, 6, 6, 4),
+                List.of(950, 40, 600, 320, 230, 720, 800, 620, 650, 460)
+        );
+        List<Integer> values = List.of(55, 10, 47);
+        ApplicationGenetique algo = new ApplicationGenetique(maximumCost, costs, values);
+        int taillePopulation = 3;
+        int nombreDeGenerations = 5;
+        double mutationFactor = 0.1;
+        List<Bag> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations, mutationFactor);
+        for (Bag bag : resultats) {
+            System.out.println(bag);
         }
     }
 }
