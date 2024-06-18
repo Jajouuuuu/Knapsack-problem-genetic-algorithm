@@ -19,7 +19,7 @@ public class Main {
         System.out.println(sac);
         sac.supprimeObjet(1);
         System.out.println(sac);*/
-        List<Integer> maximumCost = List.of(200, 100, 700, 400, 300, 800, 900, 700, 750, 500);
+        List<Integer> maximumCost = List.of(200, 160, 700, 400, 300, 850, 950, 700, 750, 550);
         List<List<Integer>> costs = List.of(
                 List.of(95, 4, 60, 32, 23, 72, 80, 62, 65, 46),
                 List.of(50, 10, 20, 32, 23, 72, 8, 2, 50, 46),
@@ -33,13 +33,18 @@ public class Main {
                 List.of(950, 40, 600, 320, 230, 720, 800, 620, 650, 460)
         );
         List<Integer> values = List.of(55, 10, 47, 30, 20, 60, 90, 10, 78, 10);
-        ApplicationGenetique algo = new ApplicationGenetique(maximumCost, costs, values);
+        GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 10);
         int taillePopulation = 10;
         int nombreDeGenerations = 100;
         double mutationFactor = 0.1;
-        List<Bag> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations, mutationFactor);
-        for (Bag bag : resultats) {
+        //List<Bag> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations, mutationFactor);
+        /*for (Bag bag : resultats) {
             System.out.println(bag);
-        }
+        }*/
+
+        //System.out.println(Bag.createRandomBag());
+        Bag res = algo.solve(0.1, .04, 270, 0.4, taillePopulation);
+        System.out.println(res);
+
     }
 }
