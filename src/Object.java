@@ -5,7 +5,6 @@ public class Object {
     List<Integer> cost;
     int value;
 
-
     public Object(int id, List<Integer> cost, int value) {
         this.id = id;
         this.cost = cost;
