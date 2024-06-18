@@ -1,11 +1,12 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
-class Bag {
-    // Ca c'est les objects qui peuvent être mis dans le sac
-    List<Object> objects;
-    // Ca c'est la liste des objects PRESENTS dans le sac c'est des 1 ou des 0 (j'ai mis integer car plus simple que boolean mais on peut changer
+public class Bag implements Comparable<Bag> {
+    // Ca c'est les BagObjects qui peuvent être mis dans le sac
+    static List<BagObject> bagObjects; //TODO étant donné que c'est une liste commune à tous les bag et qui ne change pas pourquoi on s'embèete à la remettre  dasn chaque bag Faudrait pas la mettre ailleurs ? Ou alors en static ?
+    // Ca c'est la liste des BagObjects PRESENTS dans le sac c'est des 1 ou des 0 (j'ai mis integer car plus simple que boolean mais on peut changer
     // -> du même avis c'est plus simple integer
     List<Integer> content;
     // Ca c'est le cost du sac
@@ -13,11 +14,11 @@ class Bag {
     // ça c'est ce que vaut le sac
     int value;
 
-    public Bag(List<Object> objects, List<Integer> content) {
-        this.objects = objects;
+    public Bag(List<BagObject> bagObjects, List<Integer> content) {
+        Bag.bagObjects = bagObjects;
         this.content = content;
-        this.cost = new ArrayList<>(objects.get(0).costDimension());
-        for (int i = 0; i < objects.get(0).costDimension(); i++) {
+        this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
+        for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
             this.cost.add(0);
         }
         this.value = 0;
@@ -29,13 +30,57 @@ class Bag {
         }
     }
 
-    public void addObject(int n) {
+
+    public Bag() {
+        this.content = new ArrayList<>();
+        this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
+        for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
+            this.cost.add(0);
+            this.content.add(0);
+        }
+        this.value = 0;
+    }
+    // Méthode statique pour initialiser les objets
+    public static void initializeObjects(List<BagObject> objList) {
+        bagObjects = objList;
+    }
+
+
+
+    // Méthode pour créer un sac avec des objets ajoutés de manière aléatoire
+    public static Bag createRandomBag() {
+        Bag newBag = new Bag();
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < bagObjects.size(); i++) {
+            indices.add(i);
+        }
+        Collections.shuffle(indices);
+
+        for (int index : indices) {
+            if (newBag.isValidAdd(index)) {
+                newBag.addBagObject(index);
+            }
+        }
+
+        return newBag;
+    }
+
+
+    public boolean isValidAdd(int n) {
+        for (int j = 0; j < cost.size(); j++) {
+            if (cost.get(j) + bagObjects.get(n).cost.get(j) > GeneticAlgorithm.maximumCost.get(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void addBagObject(int n) {
         if (content.get(n) == 1) return;
         addCostAndValue(n);
         content.set(n, 1);
     }
 
-    public void removeObject(int n) {
+    public void removeBagObject(int n) {
         if (content.get(n) == 0) return;
         removeCostandValue(n);
         content.set(n, 0);
@@ -51,10 +96,10 @@ class Bag {
         for (int i = 0; i < this.content.size(); i++) {
             if (rand.nextDouble() < facteurMutation) {
                 if (this.content.get(i) == 1) {
-                    this.removeObject(i);
+                    this.removeBagObject(i);
                 } else {
                     if (isValidAddCostAndValue(i, maximumCost)) {
-                        this.addObject(i);
+                        this.addBagObject(i);
                     }
                 }
             }
@@ -71,37 +116,45 @@ class Bag {
         return false;
     }
 
+
+
     // Bon ça c'est un ptit plus comme je passe jamais par des copy d'élément mais je sais qu'Alice oui mdr
     public Bag copy() {
-        List<Integer> newList = new ArrayList<>(this.content);
-        Bag bag = new Bag(this.objects, newList);
-        bag.cost = this.cost;
-        bag.value = this.value;
-        return bag;
+        Bag copy = new Bag();
+        for(int i = 0; i<this.content.size(); i++){
+            if(this.content.get(i) == 1){
+                copy.addBagObject(i);
+            }
+        }
+        return copy;
     }
 
     public int costDimension(){
         return cost.size();
     }
 
+    //TODO fonction à checker + changer le nom (ex : addObjet
     public void addCostAndValue(int n){
         for (int j = 0; j < costDimension(); j++) {
-            this.cost.set(j, this.cost.get(j) + objects.get(n).cost.get(j));
+            this.cost.set(j, this.cost.get(j) + bagObjects.get(n).cost.get(j));
         }
-        this.value += objects.get(n).value;
+        this.value += bagObjects.get(n).value;
     }
 
+    //TODO très chelou cette fonction et nom absolument pas clair
     public boolean isValidAddCostAndValue(int n, List<Integer> maximumCost){
         Bag cloneBag = copy();
         cloneBag.addCostAndValue(n);
         return cloneBag.isValid(maximumCost);
     }
 
+
+    //TODO fonction à checker + changer le nom (ex : removeBagObject)
     public void removeCostandValue(int n){
         for (int j = 0; j < costDimension(); j++) {
-            this.cost.set(j, this.cost.get(j) - objects.get(n).cost.get(j));
+            this.cost.set(j, this.cost.get(j) - bagObjects.get(n).cost.get(j));
         }
-        this.value -= objects.get(n).value;
+        this.value -= bagObjects.get(n).value;
     }
 
     public boolean isValid(List<Integer> maximumCost) {
@@ -113,8 +166,35 @@ class Bag {
         return true;
     }
 
+    public boolean hasSameContent(Bag bag){
+        for(int i = 0; i<this.content.size(); i++){
+            if(!bag.content.get(i).equals(this.content.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "The bag's cost : " + cost + ", value : " + value + ", and elements in the bag : " + content;
+    }
+
+    @Override
+    public int compareTo(Bag o) {
+        if(this == o || this.hasSameContent(o))
+            return 0;
+        int fitness1 = this.value, fitness2 = o.value;
+        if(fitness1 > fitness2)
+            return 1;
+        else {
+            if(fitness1 < fitness2)
+                return -1;
+            else {
+                int totalCost1 = this.cost.stream().mapToInt(Integer::intValue).sum();
+                int totalCost2 = o.cost.stream().mapToInt(Integer::intValue).sum();
+                return Integer.compare(totalCost2, totalCost1);
+            }
+        }
     }
 }
