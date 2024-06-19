@@ -59,7 +59,10 @@ public class GeneticAlgorithm {
         return res;
     }
 
-    public Bag solve(double mutationRate, double elitistRate, int targetValue, double mutationFactor, int populationSize) {
+    // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
+    // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
+    // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ? 
+    public Bag solve(double elitistRate, int targetValue, double mutationFactor, int populationSize) {
         Population newPopulation = null;
         boolean containWinner = false;
         int cmp = 1;

@@ -22,7 +22,7 @@ public class Main {
         List<Integer> values = List.of(55, 10, 47, 30, 20, 60, 90, 10, 78, 10);
         GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 10);
         int taillePopulation = 10;
-        Bag solution_optimale = algo.solve(0.1, .04, 270, 0.4, taillePopulation);
+        Bag solution_optimale = algo.solve(0.1, 270, 0.4, taillePopulation);
         System.out.println(solution_optimale);
     }
 }
