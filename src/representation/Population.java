@@ -1,11 +1,10 @@
 package representation;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.TreeSet;
+import algorithm.GeneticAlgorithm;
+
+import java.util.*;
 
 public class Population {
-
     private ArrayList<Bag> population;
     private TreeSet<Bag> orderedPopulation;
 
@@ -16,7 +15,6 @@ public class Population {
         this.population = new ArrayList<Bag>();
         this.orderedPopulation = new TreeSet<Bag>();
     }
-
 
     /**
      * Adds a representation.Bag to the population.
@@ -74,8 +72,27 @@ public class Population {
         this.add(newBag);
     }
 
-    //TODO mutation parce qu'elle se fait sur la population et pas sur un bag en particulier
-
+    public void mutation(List<Integer> maximumCost, double mutationFactor) {
+        for (Bag bag : this.population) {
+            if (Math.random() < mutationFactor) {
+                int mutationSize = (int) (bag.content.size() * mutationFactor);
+                for (int i = 0; i < mutationSize; i++) {
+                    int index = (int) (Math.random() * bag.content.size());
+                    if (bag.content.get(index) == 1) {
+                        bag.removeBagObject(index);
+                    } else {
+                        if (bag.isValidAdd(index)) {
+                            bag.addBagObject(index);
+                        }
+                    }
+                }
+                // Repair the bag si c'est pas un bag valid après la mutation TODO a checker si ça fonctionne correctement
+                if (!bag.isValid(maximumCost)) {
+                    bag.reparation(maximumCost);
+                }
+            }
+        }
+    }
 
     /**
      * Provides the best individual in the population.
@@ -85,7 +102,6 @@ public class Population {
         Iterator<Bag> it = this.iterator();
         return it.next();
     }
-
 
     @Override
     public String toString() {
