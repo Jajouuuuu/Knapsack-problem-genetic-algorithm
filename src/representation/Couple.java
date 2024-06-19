@@ -1,3 +1,5 @@
+package representation;
+
 /**
  * This class represents a couple of PentominosBoard.
  * The two elements of the couple represents parents 

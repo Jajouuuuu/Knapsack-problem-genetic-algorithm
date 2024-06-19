@@ -1,3 +1,5 @@
+package representation;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -8,7 +10,7 @@ public class Population {
     private TreeSet<Bag> orderedPopulation;
 
     /**
-     * Constructor building an instance of Population from a Bag
+     * Constructor building an instance of representation.Population from a representation.Bag
      */
     public Population() {
         this.population = new ArrayList<Bag>();
@@ -17,8 +19,8 @@ public class Population {
 
 
     /**
-     * Adds a Bag to the population.
-     * @param bag, the Bag to be added.
+     * Adds a representation.Bag to the population.
+     * @param bag, the representation.Bag to be added.
      */
     public void add(Bag bag) {
         if(this.orderedPopulation.contains(bag)) {
@@ -52,10 +54,10 @@ public class Population {
 
 
     /**
-     * This method provides an iterator on the Population of individuals.
+     * This method provides an iterator on the representation.Population of individuals.
      * This iterator makes it possible to iterate over individuals in
      * descending order of fitness.
-     * @return an iterator on the Population of individuals.
+     * @return an iterator on the representation.Population of individuals.
      */
     public Iterator<Bag> iterator() {
         return this.orderedPopulation.descendingIterator();
@@ -77,7 +79,7 @@ public class Population {
 
     /**
      * Provides the best individual in the population.
-     * @return the best individual (Bag) in the population.
+     * @return the best individual (representation.Bag) in the population.
      */
     public Bag getBest() {
         Iterator<Bag> it = this.iterator();
@@ -87,7 +89,7 @@ public class Population {
 
     @Override
     public String toString() {
-        return "Population{" +
+        return "representation.Population{" +
                 "population=" + population;
     }
 }

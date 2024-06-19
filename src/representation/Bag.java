@@ -1,18 +1,23 @@
+package representation;
+
+import algorithm.GeneticAlgorithm;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Bag implements Comparable<Bag> {
+    // TODO : refacto nos visibilité on peut pas avoir des attributs publiques partout c'est dég faut qu'on mette des accesseurs
     // Ca c'est les BagObjects qui peuvent être mis dans le sac
-    static List<BagObject> bagObjects; //TODO étant donné que c'est une liste commune à tous les bag et qui ne change pas pourquoi on s'embèete à la remettre  dasn chaque bag Faudrait pas la mettre ailleurs ? Ou alors en static ?
+    public static List<BagObject> bagObjects;
     // Ca c'est la liste des BagObjects PRESENTS dans le sac c'est des 1 ou des 0 (j'ai mis integer car plus simple que boolean mais on peut changer
     // -> du même avis c'est plus simple integer
-    List<Integer> content;
+    public List<Integer> content;
     // Ca c'est le cost du sac
-    List<Integer> cost;
+    public List<Integer> cost;
     // ça c'est ce que vaut le sac
-    int value;
+    public int value;
 
     public Bag(List<BagObject> bagObjects, List<Integer> content) {
         Bag.bagObjects = bagObjects;

@@ -1,9 +1,11 @@
+package representation;
+
 import java.util.List;
 
 public class BagObject {
     int id;
     List<Integer> cost;
-    int value;
+    public int value;
 
 
     public BagObject(int id, List<Integer> cost, int value) {

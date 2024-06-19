@@ -1,3 +1,5 @@
+package algorithm;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ public class RandomSelector {
     private float somme = 0;
 
     /**
-     * This constructor creates a RandomSelector.
+     * This constructor creates a algorithm.RandomSelector.
      */
     public RandomSelector() {
         this.proba = new ArrayList<Float>();
@@ -24,7 +26,7 @@ public class RandomSelector {
      * can be chosen from. In the context of the genetic algorithm
      * the value i is the fitness of some individual.
      * @param i, the fitness of the individual to be added to
-     * the  RandomSelector.
+     * the  algorithm.RandomSelector.
      */
     public void add(int i) {
         this.proba.add(Float.valueOf(i));

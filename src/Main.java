@@ -1,3 +1,6 @@
+import algorithm.GeneticAlgorithm;
+import representation.Bag;
+
 import java.util.List;
 
 public class Main {
@@ -37,12 +40,12 @@ public class Main {
         int taillePopulation = 10;
         int nombreDeGenerations = 100;
         double mutationFactor = 0.1;
-        //List<Bag> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations, mutationFactor);
-        /*for (Bag bag : resultats) {
+        //List<representation.Bag> resultats = algo.algorithmeGenetique(taillePopulation, nombreDeGenerations, mutationFactor);
+        /*for (representation.Bag bag : resultats) {
             System.out.println(bag);
         }*/
 
-        //System.out.println(Bag.createRandomBag());
+        //System.out.println(representation.Bag.createRandomBag());
         Bag res = algo.solve(0.1, .04, 270, 0.4, taillePopulation);
         System.out.println(res);
 

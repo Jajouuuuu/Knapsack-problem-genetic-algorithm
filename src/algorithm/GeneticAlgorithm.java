@@ -1,16 +1,21 @@
-import java.security.cert.PolicyNode;
+package algorithm;
+
 import java.util.*;
+
+import representation.Bag;
+import representation.BagObject;
+import representation.Couple;
+import representation.Population;
 
 public class GeneticAlgorithm {
 
     public static List<Integer> maximumCost;
-    List<Integer> values;
+    public List<Integer> values;
 
     // je ne crois pas qu'il faille d'attribut cost ici. On évalue cout des sacs individuellement
-    List<List<Integer>> costs;
-    List<BagObject> BagObjects;
+    public List<List<Integer>> costs;
+    public List<BagObject> BagObjects;
     public Population population;
-
     public int populationSize;
 
     public GeneticAlgorithm(List<Integer> maximumCost, List<List<Integer>> costs, List<Integer> values, int k) {
@@ -55,10 +60,10 @@ public class GeneticAlgorithm {
             }
         }
 
-        Bag child1 = new Bag(parent1.BagObjects, contentChild1);
-        Bag child2 = new Bag(parent2.BagObjects, contentChild2);
-        return new Bag[]{child1, child2};*/
-        for(int i = 0; i<parents.size(); i++){
+        representation.Bag child1 = new representation.Bag(parent1.BagObjects, contentChild1);
+        representation.Bag child2 = new representation.Bag(parent2.BagObjects, contentChild2);
+        return new representation.Bag[]{child1, child2};*/
+        for(int i = 0; i< parents.size(); i++){
             Bag child1 = new Bag();
             Bag child2 = new Bag();
             for (int j = 0; j < parents.get(0).father.content.size(); j++) {
@@ -116,19 +121,18 @@ public class GeneticAlgorithm {
                 bag.addBagObject(i);
             }
         }
-
     }
 
 
-/*    public List<Bag> algorithmeGenetique(int sizePopulation, int numberOfGenerations, double mutationFactor) {
+/*    public List<representation.Bag> algorithmeGenetique(int sizePopulation, int numberOfGenerations, double mutationFactor) {
         population = new ArrayList<>();
 
         for (int generation = 0; generation < numberOfGenerations; generation++) {
-            List<Bag> newPopulation = new ArrayList<>();
+            List<representation.Bag> newPopulation = new ArrayList<>();
             while (newPopulation.size() < sizePopulation) {
-                Bag parent1 = selection();
-                Bag parent2 = selection();
-                Bag[] enfants = crossover(parent1, parent2);
+                representation.Bag parent1 = selection();
+                representation.Bag parent2 = selection();
+                representation.Bag[] enfants = crossover(parent1, parent2);
                 enfants[0].mutation(this.maximumCost, mutationFactor);
                 enfants[1].mutation(this.maximumCost, mutationFactor);
                 reparation(enfants[0]);
@@ -181,17 +185,17 @@ public class GeneticAlgorithm {
     }
 
     // On choisit les parents pour la sélection
-/*    private Bag selection() {
+/*    private representation.Bag selection() {
         // Le tournament en gros c'est pour la diversité c'est le compromis entre Exploration et Exploitation dont parlais le prof
         // si j'ai bien compris https://khayyam.developpez.com/articles/algo/genetic/
         int tournamentSize = 3;
-        List<Bag> tournament = new ArrayList<>();
+        List<representation.Bag> tournament = new ArrayList<>();
         for (int i = 0; i < tournamentSize; i++) {
             int randomIndex = (int) (Math.random() * population.size());
             tournament.add(population.get(randomIndex));
         }
-        Bag best = tournament.get(0);
-        for (Bag bag : tournament) {
+        representation.Bag best = tournament.get(0);
+        for (representation.Bag bag : tournament) {
             if (bag.betterThan(best, maximumCost)) {
                 best = bag;
             }
@@ -223,7 +227,7 @@ public class GeneticAlgorithm {
 
     @Override
     public String toString() {
-        return "GeneticAlgorithm{" +
+        return "algorithm.GeneticAlgorithm{" +
                 "values=" + values +
                 ", costs=" + costs +
                 ", BagObjects=" + BagObjects +
