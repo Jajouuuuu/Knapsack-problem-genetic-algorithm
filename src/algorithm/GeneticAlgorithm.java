@@ -68,7 +68,7 @@ public class GeneticAlgorithm {
             System.out.println("It n°: " + cmp++);
             newPopulation = crossover(selection());
 
-            newPopulation.mutation(maximumCost, mutationFactor);
+            newPopulation.flipMutation(maximumCost, mutationFactor);
 
             for (int i = 0; i < newPopulation.size(); i++) {
                 if (!newPopulation.get(i).isValid(maximumCost)) {
