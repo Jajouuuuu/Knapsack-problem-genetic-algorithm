@@ -60,11 +60,11 @@ public class GeneticAlgorithm {
     // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
     // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
     // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ?
-    public Bag solve(double elitistRate, int targetValue, double mutationFactor, int populationSize) {
+    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize) {
         Population newPopulation = null;
-        boolean containWinner = false;
+        boolean stop = false;
         int cmp = 1;
-        while (!containWinner) {
+        while (!stop) {
             System.out.println("It n°: " + cmp++);
             newPopulation = crossover(selection());
 
@@ -83,7 +83,7 @@ public class GeneticAlgorithm {
             }
             System.out.println("Best fitness : " + newPopulation.getBest().value);
             System.out.println("Best bag : " + newPopulation.getBest().content);
-            containWinner = newPopulation.getBest().value >= targetValue;
+            stop = cmp >= maxIt;
             population = newPopulation;
         }
         return newPopulation.getBest();

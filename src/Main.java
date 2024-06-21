@@ -8,6 +8,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         // On initialise des valeurs en plusieurs dimensions pour le problème
+
+        //Ici on a 6 objets et 10 contraintes
         List<Integer> maximumCost = List.of(80, 96, 20, 36, 44, 48, 10, 18, 22, 24);
         List<List<Integer>> costs = List.of(
                 List.of(8,8,3,5,5,5,0,3,3,3),
@@ -33,8 +35,9 @@ public class Main {
         );
        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
         GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
+        int maxIt = 100;
         int taillePopulation = 1000;
-        Bag solution_optimale = algo.solve(0.1, 3800, 0.4, taillePopulation);
+        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation);
         System.out.println(solution_optimale);
 /*
 
