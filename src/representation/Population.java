@@ -108,4 +108,8 @@ public class Population {
         return "representation.Population{" +
                 "population=" + population;
     }
+
+    public int getOrderedPopulationsize(){
+        return orderedPopulation.size();
+    }
 }

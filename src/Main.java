@@ -1,28 +1,84 @@
 import algorithm.GeneticAlgorithm;
 import representation.Bag;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // On initialise des valeurs en plusieurs dimensions pour le problème
-        List<Integer> maximumCost = List.of(200, 160, 700, 400, 300, 850, 950, 700, 750, 550);
+        List<Integer> maximumCost = List.of(80, 96, 20, 36, 44, 48, 10, 18, 22, 24);
         List<List<Integer>> costs = List.of(
-                List.of(95, 4, 60, 32, 23, 72, 80, 62, 65, 46),
-                List.of(50, 10, 20, 32, 23, 72, 8, 2, 50, 46),
-                List.of(30, 30, 10, 52, 43, 12, 50, 20, 20, 76),
-                List.of(90, 20, 90, 72, 83, 42, 60, 40, 50, 60),
-                List.of(50, 50, 50, 52, 53, 52, 50, 40, 50, 60),
-                List.of(90, 90, 90, 92, 93, 92, 90, 90, 90, 90),
-                List.of(40, 40, 40, 42, 43, 42, 40, 40, 40, 40),
-                List.of(70, 70, 70, 72, 73, 72, 70, 70, 70, 70),
-                List.of(2, 4, 6, 3, 2, 7, 8, 6, 6, 40),
-                List.of(950, 40, 600, 320, 230, 720, 800, 620, 650, 460)
+                List.of(8,8,3,5,5,5,0,3,3,3),
+                List.of(12,12,6,10,13,13,0,0,2,2),
+                List.of(13,13,4,8,8,80,4,4,4),
+                List.of(64,75,18,32,42,48,0,0,0,8),
+                List.of(22,22,6, 6, 6,6,8,8,8,8),
+                List.of(41,41,4,12,20,20,0,0,4,4)
+
+
+           /*     List.of(8, 12, 13, 64, 22, 41),
+                List.of(8, 12, 13, 75, 22, 41),
+                List.of(3, 6, 4, 18, 6, 4),
+                List.of(5, 10, 8, 32, 6, 12),
+                List.of(5, 13, 8, 42, 6, 20),
+                List.of(5, 13, 8, 48, 6, 20),
+                List.of(0, 0, 0, 0, 8, 0),
+                List.of(3, 0, 4, 0, 8, 0),
+                List.of(3, 2, 4, 0, 8, 4),
+                List.of(3, 2, 4, 8, 8, 4)
+                */
+
         );
-        List<Integer> values = List.of(55, 10, 47, 30, 20, 60, 90, 10, 78, 10);
-        GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 10);
-        int taillePopulation = 10;
-        Bag solution_optimale = algo.solve(0.1, 270, 0.4, taillePopulation);
+        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
+        GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
+        int taillePopulation = 1000;
+        Bag solution_optimale = algo.solve(0.1, 3800, 0.4, taillePopulation);
         System.out.println(solution_optimale);
+      /*  Bag bag = Bag.createRandomBag();
+        System.out.println(bag);
+        bag.addBagObject(0);
+        System.out.println(bag);*/
+
+     /*   Bag newBag = new Bag();
+        System.out.println(newBag);
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < Bag.bagObjects.size(); i++) {
+            indices.add(i);
+        }
+        System.out.println(indices);
+        Collections.shuffle(indices);
+        System.out.println(indices);
+
+        System.out.println("\n\n\n Début de la boucle \n\n\n");
+        for (int index : indices) {
+            System.out.println("index "  + index);
+            System.out.println("On tente d'ajouter le : " + index + " : " + newBag.isValidAdd(index));
+            if (newBag.isValidAdd(index)) {
+                System.out.println("avant ajout : " +newBag);
+                newBag.addBagObject(index);
+                System.out.println("après ajout : " +newBag);
+            }
+        }
+        System.out.println(newBag);*/
+
+    /*    List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < Bag.bagObjects.size(); i++) {
+            indices.add(i);
+        }
+        System.out.println(indices);
+        Collections.shuffle(indices);
+        System.out.println(indices);
+        System.out.println(indices);
+        Collections.shuffle(indices);
+        System.out.println(indices);
+        System.out.println(indices);
+        Collections.shuffle(indices);
+        System.out.println(indices);
+        System.out.println(indices);
+        Collections.shuffle(indices);
+        System.out.println(indices);*/
+
     }
 }

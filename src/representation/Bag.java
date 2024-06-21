@@ -16,6 +16,8 @@ public class Bag implements Comparable<Bag> {
         this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
         for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
             this.cost.add(0);
+        }
+        for(int i = 0; i < bagObjects.size(); i++){
             this.content.add(0);
         }
         this.value = 0;
@@ -33,9 +35,12 @@ public class Bag implements Comparable<Bag> {
             indices.add(i);
         }
         Collections.shuffle(indices);
+        int i = 0;
         for (int index : indices) {
+            if(i>1) break;
             if (newBag.isValidAdd(index)) {
                 newBag.addBagObject(index);
+                i++;
             }
         }
         return newBag;
@@ -43,7 +48,7 @@ public class Bag implements Comparable<Bag> {
 
     // Si le sac est valide alors ajout
     public boolean isValidAdd(int n) {
-        for (int j = 0; j < bagObjects.get(n).costDimension(); j++) {
+        for (int j = 0; j < cost.size(); j++) {
             if (this.cost.get(j) + bagObjects.get(n).getCost().get(j) > GeneticAlgorithm.maximumCost.get(j)) {
                 return false;
             }
@@ -85,15 +90,16 @@ public class Bag implements Comparable<Bag> {
             BagObject obj = sortedObjects.get(l);
             int index = obj.getIndex();
             boolean canAdd = true;
-            for (int j = 0; j < maximumCost.size(); j++) {
+            for (int j = 0; j < cost.size(); j++) {
                 if (cost.get(j) + obj.getCost().get(j) > maximumCost.get(j)) {
                     canAdd = false;
                     break;
                 }
             }
             // Si on viole une contrainte en ajoutant un objet on le tej
+            // itéré sur cost.get[0] size
             if (!canAdd) {
-                for (int j = 0; j < maximumCost.size(); j++) {
+                for (int j = 0; j < cost.size(); j++) {
                     cumulativeCosts.set(j, cumulativeCosts.get(j) - obj.getCost().get(j));
                 }
                 cost = cumulativeCosts;
@@ -101,7 +107,7 @@ public class Bag implements Comparable<Bag> {
             }
             // Et on itère pour voir si ceux qu'on a virer avant peuvent être ajouté
             if (!canAdd) {
-                for (int j = 0; j < maximumCost.size(); j++) {
+                for (int j = 0; j < cost.size(); j++) {
                     if (cost.get(j) + obj.getCost().get(j) <= maximumCost.get(j)) {
                         cumulativeCosts.set(j, cumulativeCosts.get(j) + obj.getCost().get(j));
                     }
