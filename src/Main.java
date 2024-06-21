@@ -12,7 +12,7 @@ public class Main {
         List<List<Integer>> costs = List.of(
                 List.of(8,8,3,5,5,5,0,3,3,3),
                 List.of(12,12,6,10,13,13,0,0,2,2),
-                List.of(13,13,4,8,8,80,4,4,4),
+                List.of(13,13,4,8,8,8,0,4,4,4),
                 List.of(64,75,18,32,42,48,0,0,0,8),
                 List.of(22,22,6, 6, 6,6,8,8,8,8),
                 List.of(41,41,4,12,20,20,0,0,4,4)
@@ -31,11 +31,36 @@ public class Main {
                 */
 
         );
-        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
+       List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
         GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
         int taillePopulation = 1000;
         Bag solution_optimale = algo.solve(0.1, 3800, 0.4, taillePopulation);
         System.out.println(solution_optimale);
+/*
+
+        Bag newBag = new Bag();
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < Bag.bagObjects.size(); i++) {
+            indices.add(i);
+        }
+        Collections.shuffle(indices);
+        indices = List.of(1,2,5,0,3,4);
+        System.out.println(indices);
+        int i = 0;
+        for (int index : indices) {
+            System.out.println("indexe" + index);
+            System.out.println("Objects indiexe : " + Bag.bagObjects.get(index));
+            if (newBag.isValidAdd(index)) {
+                newBag.addBagObject(index);
+            }
+            System.out.println(newBag);
+        }
+        System.out.println(newBag);
+*/
+
+
+
+
       /*  Bag bag = Bag.createRandomBag();
         System.out.println(bag);
         bag.addBagObject(0);

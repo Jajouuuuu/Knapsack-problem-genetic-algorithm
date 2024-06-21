@@ -35,12 +35,9 @@ public class Bag implements Comparable<Bag> {
             indices.add(i);
         }
         Collections.shuffle(indices);
-        int i = 0;
         for (int index : indices) {
-            if(i>1) break;
             if (newBag.isValidAdd(index)) {
                 newBag.addBagObject(index);
-                i++;
             }
         }
         return newBag;
