@@ -37,7 +37,8 @@ public class Main {
         GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
         int maxIt = 10;
         int taillePopulation = 1000;
-        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation);
+        String mutationMethod = "scrambleMutation";     // either : flipMutation, swapMutation, scrambleMutation or inversionMutation
+        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation, mutationMethod);
         System.out.println(solution_optimale);
 /*
 

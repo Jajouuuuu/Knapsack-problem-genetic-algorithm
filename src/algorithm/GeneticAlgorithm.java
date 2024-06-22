@@ -151,7 +151,7 @@ de crossover à point unique ou à deux points.*/
     // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
     // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
     // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ?
-    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize) {
+    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod) {
         Population newPopulation = null;
         boolean stop = false;
         int cmp = 1;
@@ -159,9 +159,24 @@ de crossover à point unique ou à deux points.*/
             System.out.println("It n°: " + cmp++);
             newPopulation = crossover(selection());
 
-            newPopulation.flipMutation(maximumCost, mutationFactor);
+            switch (mutationMethod) {
+                case "flipMutation":
+                    newPopulation.flipMutation(maximumCost, mutationFactor);
+                    break;
+                case "swapMutation":
+                    newPopulation.swapMutation(maximumCost, mutationFactor);
+                    break;
+                case "scrambleMutation":
+                    newPopulation.scrambleMutation(maximumCost, mutationFactor);
+                    break;
+                case "inversionMutation":
+                    newPopulation.inversionMutation(maximumCost, mutationFactor);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported method type: " + mutationMethod);
+            }
 
-            for (int i = 0; i < newPopulation.size(); i++) {
+                    for (int i = 0; i < newPopulation.size(); i++) {
                 if (!newPopulation.get(i).isValid(maximumCost)) {
                     newPopulation.get(i).reparation(maximumCost);
                 }
