@@ -78,41 +78,27 @@ public class Bag implements Comparable<Bag> {
     // Méthode de réparation qu'on applique directement sur un sac
     // maximumCost en paramètre car on check si on dépasse pas
     public void reparation(List<Integer> maximumCost) {
-        // On trie les object par valeur (utilité normalement non ? mais je trouve pas notre représentation de l'utilité ?)
-        List<BagObject> sortedObjects = new ArrayList<>(bagObjects);
-        sortedObjects.sort(Comparator.comparingInt(BagObject::getValue).reversed());
-        List<Integer> cumulativeCosts = new ArrayList<>(cost);
-        // On check si on a une violation de contrainte
-        for (int l = sortedObjects.size() - 1; l >= 0; l--) {
-            BagObject obj = sortedObjects.get(l);
-            int index = obj.getIndex();
-            boolean canAdd = true;
-            for (int j = 0; j < cost.size(); j++) {
-                if (cost.get(j) + obj.getCost().get(j) > maximumCost.get(j)) {
-                    canAdd = false;
-                    break;
-                }
-            }
-            // Si on viole une contrainte en ajoutant un objet on le tej
-            // itéré sur cost.get[0] size
-            if (!canAdd) {
-                for (int j = 0; j < cost.size(); j++) {
-                    cumulativeCosts.set(j, cumulativeCosts.get(j) - obj.getCost().get(j));
-                }
-                cost = cumulativeCosts;
-                value -= obj.getValue();
-            }
-            // Et on itère pour voir si ceux qu'on a virer avant peuvent être ajouté
-            if (!canAdd) {
-                for (int j = 0; j < cost.size(); j++) {
-                    if (cost.get(j) + obj.getCost().get(j) <= maximumCost.get(j)) {
-                        cumulativeCosts.set(j, cumulativeCosts.get(j) + obj.getCost().get(j));
-                    }
-                }
-                cost = cumulativeCosts;
-                value += obj.getValue();
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < this.content.size(); i++) {
+            indices.add(i);
+        }
+        indices.sort((a, b) -> Integer.compare(
+                bagObjects.get(b).value,
+                bagObjects.get(a).value
+        ));
+        // sort works
+        // c'est comme le répare qu'il y a dans mutation.
+        for (int i = indices.size()-1; i >= 0; i--) {
+            if (this.content.get(indices.get(i)) == 1 && !this.isValid(maximumCost)) {
+                this.removeBagObject(indices.get(i));
             }
         }
+        for (int i : indices) {
+            if (this.content.get(i) == 0 && this.isValidAdd(i)) {
+                this.addBagObject(i);
+            }
+        }
+
     }
 
     public Bag copy() {

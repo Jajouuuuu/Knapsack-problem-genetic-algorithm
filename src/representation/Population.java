@@ -95,7 +95,6 @@ public class Population {
                     }
                 }
                 // Repair the bag if it's not valid after the mutation
-                // TODO ça ne fonctionne pas, il faut le corriger
                 if (!bag.isValid(maximumCost)) {
                     bag.reparation(maximumCost);
                 }
@@ -132,7 +131,6 @@ public class Population {
                     bag.addBagObject(index1);
                 }
                 // Repair the bag if it's not valid after the mutation
-                // TODO ça ne fonctionne pas, il faut le corriger
                 if (!bag.isValid(maximumCost)) {
                     bag.reparation(maximumCost);
                 }
@@ -179,7 +177,6 @@ public class Population {
                     }
                 }
                 // Repair the bag si c'est pas un bag valid après la mutation
-                // TODO ça ne fonctionne pas, il faut le corriger
                 if (!bag.isValid(maximumCost)) {
                     bag.reparation(maximumCost);
                 }
@@ -226,7 +223,6 @@ public class Population {
                     }
                 }
                 // Repair the bag if it's not valid after the mutation
-                // TODO ça ne fonctionne pas, il faut le corriger
                 if (!bag.isValid(maximumCost)) {
                     bag.reparation(maximumCost);
                 }
