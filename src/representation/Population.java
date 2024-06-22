@@ -72,12 +72,20 @@ public class Population {
         this.add(newBag);
     }
 
-    public void mutation(List<Integer> maximumCost, double mutationFactor) {
+    /**
+     * Performs a flip mutation on the population of bags. For each bag, a number of items
+     * are randomly selected and flipped (added or removed) based on the mutation factor.
+     * If the resulting bag is not valid, it is repaired to ensure it meets the maximum cost constraints.
+     * @param maximumCost The list of maximum costs used to validate the bags.
+     * @param mutationFactor The probability of a mutation occurring and the size of the mutation.
+     */
+    public void flipMutation(List<Integer> maximumCost, double mutationFactor) {
         for (Bag bag : this.population) {
             if (Math.random() < mutationFactor) {
-                int mutationSize = (int) (bag.content.size() * mutationFactor);
+                int mutationSize = (int) (bag.content.size() * mutationFactor ) + 1;
                 for (int i = 0; i < mutationSize; i++) {
                     int index = (int) (Math.random() * bag.content.size());
+                    // Flip the object at the selected index
                     if (bag.content.get(index) == 1) {
                         bag.removeBagObject(index);
                     } else {
@@ -86,7 +94,139 @@ public class Population {
                         }
                     }
                 }
-                // Repair the bag si c'est pas un bag valid après la mutation TODO a checker si ça fonctionne correctement
+                // Repair the bag if it's not valid after the mutation
+                // TODO ça ne fonctionne pas, il faut le corriger
+                if (!bag.isValid(maximumCost)) {
+                    bag.reparation(maximumCost);
+                }
+            }
+        }
+    }
+
+    /**
+     * Performs a swap mutation on the population of bags. For each bag, two items are
+     * randomly selected and swapped based on the mutation factor. If the resulting
+     * bag is not valid, it is repaired to ensure it meets the maximum cost constraints.
+     * @param maximumCost The list of maximum costs used to validate the bags.
+     * @param mutationFactor The probability of a mutation occurring.
+     */
+    public void swapMutation(List<Integer> maximumCost, double mutationFactor) {
+        for (Bag bag : this.population) {
+            if (Math.random() < mutationFactor) {
+                // Select two different random indices
+                int index1 = (int) (Math.random() * bag.content.size());
+                int index2;
+                do {
+                    index2 = (int) (Math.random() * bag.content.size());
+                } while (index2 == index1);
+                int contentIndex1 = bag.content.get(index1);
+                int contentIndex2 = bag.content.get(index2);
+
+                // Swap items if conditions are met
+                if (contentIndex1 == 1 && contentIndex2 == 0 && bag.isValidAdd(index2)){
+                    bag.removeBagObject(index1);
+                    bag.addBagObject(index2);
+                }
+                else if (contentIndex1 == 0 && contentIndex2 == 1 && bag.isValidAdd(index1)){
+                    bag.removeBagObject(index2);
+                    bag.addBagObject(index1);
+                }
+                // Repair the bag if it's not valid after the mutation
+                // TODO ça ne fonctionne pas, il faut le corriger
+                if (!bag.isValid(maximumCost)) {
+                    bag.reparation(maximumCost);
+                }
+            }
+        }
+    }
+
+    /**
+     * Performs a scramble mutation on the population of bags. For each bag, a random subset
+     * of items is selected, scrambled (shuffled), and then applied back to the bag's content
+     * based on the mutation factor. If the resulting bag is not valid, it is repaired to ensure
+     * it meets the maximum cost constraints.
+     * @param maximumCost The list of maximum costs used to validate the bags.
+     * @param mutationFactor The probability of a mutation occurring and the size of the mutated subset.
+     */
+    public void scrambleMutation(List<Integer> maximumCost, double mutationFactor) {
+        for (Bag bag : this.population) {
+            if (Math.random() < mutationFactor) {
+                // Select two different random indices
+                int startIndex = (int) (Math.random() * bag.content.size());
+                int endIndex;
+                do {
+                    endIndex = (int) (Math.random() * bag.content.size());
+                } while (endIndex == startIndex | Math.abs(endIndex-startIndex+1) > bag.content.size()/2);
+                // condition on size of scrambled subset to temper the effect of mutation
+                if (startIndex > endIndex) {
+                    int temp = startIndex;
+                    startIndex = endIndex;
+                    endIndex = temp;
+                }
+
+                // Scramble the sublist
+                List<Integer> sublist = bag.content.subList(startIndex, endIndex + 1);
+                List<Integer> scrambledSublist = new ArrayList<>(sublist);
+                Collections.shuffle(scrambledSublist);
+
+                // Apply the scrambled sublist back to the bag content
+                for (int i = 0; i < scrambledSublist.size(); i++) {
+                    if (scrambledSublist.get(i) == 1 && bag.content.get(startIndex + i) == 0) {
+                        bag.addBagObject(startIndex + i);
+                    }
+                    else if (scrambledSublist.get(i) == 0 && bag.content.get(startIndex + i) == 1) {
+                        bag.removeBagObject(startIndex + i);
+                    }
+                }
+                // Repair the bag si c'est pas un bag valid après la mutation
+                // TODO ça ne fonctionne pas, il faut le corriger
+                if (!bag.isValid(maximumCost)) {
+                    bag.reparation(maximumCost);
+                }
+            }
+        }
+    }
+
+    /**
+     * Performs an inversion mutation on the population of bags. For each bag, a random subset
+     * of items is selected, inverted (reversed), and then applied back to the bag's content
+     * based on the mutation factor. If the resulting bag is not valid, it is repaired to ensure
+     * it meets the maximum cost constraints.
+     * @param maximumCost The list of maximum costs used to validate the bags.
+     * @param mutationFactor The probability of a mutation occurring and the size of the mutated subset.
+     */
+    public void inversionMutation(List<Integer> maximumCost, double mutationFactor) {
+        for (Bag bag : this.population) {
+            if (Math.random() < mutationFactor) {
+                int startIndex = (int) (Math.random() * bag.content.size());
+                int endIndex;
+                do {
+                    endIndex = (int) (Math.random() * bag.content.size());
+                } while (endIndex == startIndex | Math.abs(endIndex-startIndex+1) > bag.content.size()/2);
+                // condition on size of inverted subset to temper the effect of mutation
+
+                if (startIndex > endIndex) {
+                    int temp = startIndex;
+                    startIndex = endIndex;
+                    endIndex = temp;
+                }
+
+                // Invert the sublist
+                List<Integer> sublist = bag.content.subList(startIndex, endIndex + 1);
+                List<Integer> invertedSublist = new ArrayList<>(sublist);
+                Collections.reverse(invertedSublist);
+
+                // Apply the inverted sublist back to the bag content
+                for (int i = 0; i < invertedSublist.size(); i++) {
+                    if (invertedSublist.get(i) == 1 && bag.content.get(startIndex + i) == 0) {
+                        bag.addBagObject(startIndex + i);
+                    }
+                    else if (invertedSublist.get(i) == 0 && bag.content.get(startIndex + i) == 1) {
+                        bag.removeBagObject(startIndex + i);
+                    }
+                }
+                // Repair the bag if it's not valid after the mutation
+                // TODO ça ne fonctionne pas, il faut le corriger
                 if (!bag.isValid(maximumCost)) {
                     bag.reparation(maximumCost);
                 }
@@ -112,4 +252,37 @@ public class Population {
     public int getOrderedPopulationsize(){
         return orderedPopulation.size();
     }
+
+    public static void main(String[] args) {
+
+        List<Integer> maximumCost = List.of(80, 96, 20, 36, 44, 48, 10, 18, 22, 24);
+        List<List<Integer>> costs = List.of(
+                List.of(8,8,3,5,5,5,0,3,3,3),
+                List.of(12,12,6,10,13,13,0,0,2,2),
+                List.of(13,13,4,8,8,8,0,4,4,4),
+                List.of(64,75,18,32,42,48,0,0,0,8),
+                List.of(22,22,6, 6, 6,6,8,8,8,8),
+                List.of(41,41,4,12,20,20,0,0,4,4)
+
+
+           /*     List.of(8, 12, 13, 64, 22, 41),
+                List.of(8, 12, 13, 75, 22, 41),
+                List.of(3, 6, 4, 18, 6, 4),
+                List.of(5, 10, 8, 32, 6, 12),
+                List.of(5, 13, 8, 42, 6, 20),
+                List.of(5, 13, 8, 48, 6, 20),
+                List.of(0, 0, 0, 0, 8, 0),
+                List.of(3, 0, 4, 0, 8, 0),
+                List.of(3, 2, 4, 0, 8, 4),
+                List.of(3, 2, 4, 8, 8, 4)
+                */
+
+        );
+        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
+        GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
+
+        algo.population.scrambleMutation(maximumCost, 0.3);
+
+    }
+
 }

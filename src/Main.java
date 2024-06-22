@@ -35,9 +35,10 @@ public class Main {
         );
        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
         GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
-        int maxIt = 100;
+        int maxIt = 10;
         int taillePopulation = 1000;
-        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation);
+        String mutationMethod = "scrambleMutation";     // either : flipMutation, swapMutation, scrambleMutation or inversionMutation
+        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation, mutationMethod);
         System.out.println(solution_optimale);
 /*
 
