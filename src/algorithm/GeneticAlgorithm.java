@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 
 import representation.Bag;
 import representation.BagObject;
@@ -153,12 +154,13 @@ de crossover à point unique ou à deux points.*/
     // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
     // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
     // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ?
-    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod, String crossOver) {
+    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod, String crossOver,
+                     BiConsumer<Integer, Population> progressCallback) {
         Population newPopulation = null;
         boolean stop = false;
         int cmp = 1;
         while (!stop) {
-            //System.out.println("It n°: " + cmp++);
+            System.out.println("It n°: " + cmp++);
             switch (crossOver) {
                 case "crossover":
                     newPopulation = crossover(selection());
@@ -175,7 +177,6 @@ de crossover à point unique ou à deux points.*/
                 default:
                     throw new IllegalArgumentException("Unsupported method type: " + mutationMethod);
             }
-
 
             switch (mutationMethod) {
                 case "flipMutation":
@@ -194,7 +195,7 @@ de crossover à point unique ou à deux points.*/
                     throw new IllegalArgumentException("Unsupported method type: " + mutationMethod);
             }
 
-                    for (int i = 0; i < newPopulation.size(); i++) {
+            for (int i = 0; i < newPopulation.size(); i++) {
                 if (!newPopulation.get(i).isValid(maximumCost)) {
                     newPopulation.get(i).reparation(maximumCost);
                 }
@@ -202,11 +203,15 @@ de crossover à point unique ou à deux points.*/
 
             Iterator<Bag> it = this.population.iterator();
 
-            for (int j = 0; j < elitistRate * populationSize && j< population.getOrderedPopulationsize(); j++) {
+            for (int j = 0; j < elitistRate * populationSize && j < population.getOrderedPopulationsize(); j++) {
                 newPopulation.replace(it.next());
             }
-            //System.out.println("Best fitness : " + newPopulation.getBest().value);
-            //System.out.println("Best bag : " + newPopulation.getBest().content);
+
+            // Call the progress callback every 10 iterations
+            if (cmp % 10 == 0 && progressCallback != null) {
+                progressCallback.accept(cmp, newPopulation);
+            }
+
             stop = cmp >= maxIt;
             population = newPopulation;
         }

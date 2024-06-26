@@ -33,8 +33,8 @@ public class ResultCSV {
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap1.txt");
         ResultCSV resultCSV = new ResultCSV("results.csv");
 
-        List<Double> elitismRates = Arrays.asList( dd0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0);
-        List<Integer> populationSizes = Arrays.asList(100, 300, 500, 1000);
+        List<Double> elitismRates = Arrays.asList( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0);
+        List<Integer> populationSizes = Arrays.asList(100, 300);
         String crossoverType = "crossover";
         String mutationType = "flipMutation";
         List<Double> mutationRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
@@ -50,7 +50,7 @@ public class ResultCSV {
                             long startTime = System.currentTimeMillis();
                             int maxIt = (int) ((int) populationSize * 0.10);
                             GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), populationSize);
-                            Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, populationSize, mutationType, crossoverType);
+                            Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, populationSize, mutationType, crossoverType, null);
                             long endTime = System.currentTimeMillis();
                             long duration = endTime - startTime;
 
