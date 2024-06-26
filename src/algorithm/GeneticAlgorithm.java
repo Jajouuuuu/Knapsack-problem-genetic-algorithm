@@ -207,7 +207,6 @@ de crossover à point unique ou à deux points.*/
                 newPopulation.replace(it.next());
             }
 
-            // Call the progress callback every 10 iterations
             if (cmp % 10 == 0 && progressCallback != null) {
                 progressCallback.accept(cmp, newPopulation);
             }
