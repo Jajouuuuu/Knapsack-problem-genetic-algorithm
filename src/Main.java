@@ -93,7 +93,8 @@ public class Main {
         int maxIt = 300;
         int taillePopulation = 1000;
         String mutationMethod = "flipMutation";     // either : flipMutation, swapMutation, scrambleMutation or inversionMutation
-        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation, mutationMethod);
+        String crossOver = "crossover";  // either : crossover, singlePointCrossover, twoPointCrossover, uniformCrossover
+        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation, mutationMethod, crossOver);
         System.out.println(solution_optimale);
 /*
 

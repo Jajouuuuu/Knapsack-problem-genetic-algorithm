@@ -17,6 +17,7 @@ public class GeneticAlgorithm {
     public List<BagObject> BagObjects;
     public Population population;
     public int populationSize;
+    public int iterations;
 
     public GeneticAlgorithm(List<Integer> maximumCost, List<List<Integer>> costs, List<Integer> values, int k) {
         GeneticAlgorithm.maximumCost = maximumCost;
@@ -24,6 +25,7 @@ public class GeneticAlgorithm {
         this.costs = costs;
         this.BagObjects = new ArrayList<>();
         this.populationSize = 2 * k;
+        this.iterations = 0;
         for (int i = 0; i < values.size(); i++) {
             BagObjects.add(new BagObject(i, costs.get(i), values.get(i)));
         }
@@ -151,13 +153,29 @@ de crossover à point unique ou à deux points.*/
     // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
     // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
     // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ?
-    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod) {
+    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod, String crossOver) {
         Population newPopulation = null;
         boolean stop = false;
         int cmp = 1;
         while (!stop) {
-            System.out.println("It n°: " + cmp++);
-            newPopulation = crossover(selection());
+            //System.out.println("It n°: " + cmp++);
+            switch (crossOver) {
+                case "crossover":
+                    newPopulation = crossover(selection());
+                    break;
+                case "singlePointCrossover":
+                    newPopulation = singlePointCrossover(selection());
+                    break;
+                case "twoPointCrossover":
+                    newPopulation = twoPointCrossover(selection());
+                    break;
+                case "uniformCrossover":
+                    newPopulation = uniformCrossover(selection());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported method type: " + mutationMethod);
+            }
+
 
             switch (mutationMethod) {
                 case "flipMutation":
@@ -187,11 +205,12 @@ de crossover à point unique ou à deux points.*/
             for (int j = 0; j < elitistRate * populationSize && j< population.getOrderedPopulationsize(); j++) {
                 newPopulation.replace(it.next());
             }
-            System.out.println("Best fitness : " + newPopulation.getBest().value);
-            System.out.println("Best bag : " + newPopulation.getBest().content);
+            //System.out.println("Best fitness : " + newPopulation.getBest().value);
+            //System.out.println("Best bag : " + newPopulation.getBest().content);
             stop = cmp >= maxIt;
             population = newPopulation;
         }
+        this.iterations = cmp;
         return newPopulation.getBest();
     }
 
