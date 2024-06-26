@@ -30,37 +30,39 @@ public class ResultCSV {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap1.txt");
-        ResultCSV resultCSV = new ResultCSV("results.csv");
+        TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
+        ResultCSV resultCSV = new ResultCSV("results_pop_100.csv");
 
-        List<Double> elitismRates = Arrays.asList( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0);
-        List<Integer> populationSizes = Arrays.asList(100, 300);
-        String crossoverType = "crossover";
-        String mutationType = "flipMutation";
-        List<Double> mutationRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
+        int populationSize = 100;
+        List<Double> elitismRates = Arrays.asList(0.05, 0.10, 0.15, 0.20, 0.25, 0.3, 0.4, 0.5);
+        List<Double> mutationRates = Arrays.asList(0.2, 0.4, 0.6, 0.8);
+        List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
+        List<String> mutationTypes = Arrays.asList("flipMutation", "swapMutation", "scrambleMutation", "inversionMutation");
 
         int numThreads = Runtime.getRuntime().availableProcessors() * 2;
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
 
-        for (double mutationRate : mutationRates) {
-            for (int populationSize : populationSizes) {
-                for (double elitismRate : elitismRates) {
-                    executorService.submit(() -> {
-                        try {
-                            long startTime = System.currentTimeMillis();
-                            int maxIt = (int) ((int) populationSize * 0.10);
-                            GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), populationSize);
-                            Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, populationSize, mutationType, crossoverType, null);
-                            long endTime = System.currentTimeMillis();
-                            long duration = endTime - startTime;
+        for (double elitismRate : elitismRates) {
+            for (double mutationRate : mutationRates) {
+                for (String crossoverType : crossoverTypes) {
+                    for (String mutationType : mutationTypes) {
+                        executorService.submit(() -> {
+                            try {
+                                long startTime = System.currentTimeMillis();
+                                int maxIt = (int) ((int) populationSize * 0.30);
+                                GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), populationSize);
+                                Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, populationSize, mutationType, crossoverType, null);
+                                long endTime = System.currentTimeMillis();
+                                long duration = endTime - startTime;
 
-                            synchronized (resultCSV) {
-                                resultCSV.addResult(algo.iterations, solutionOptimale.value, elitismRate, mutationRate, populationSize, crossoverType, mutationType, duration);
+                                synchronized (resultCSV) {
+                                    resultCSV.addResult(algo.iterations, solutionOptimale.value, elitismRate, mutationRate, populationSize, crossoverType, mutationType, duration);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }
