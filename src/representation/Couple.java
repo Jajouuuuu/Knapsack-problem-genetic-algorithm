@@ -1,7 +1,7 @@
 package representation;
 
 /**
- * This class represents a couple of PentominosBoard.
+ * This class represents a couple of Bag.
  * The two elements of the couple represents parents 
  * of individuals in a genetic algorithm. 
  * @author Documented by Hugo Gilbert, a large part of the code 
