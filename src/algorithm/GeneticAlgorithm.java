@@ -1,11 +1,13 @@
 package algorithm;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.BiConsumer;
 import representation.Bag;
 import representation.BagObject;
 import representation.Couple;
 import representation.Population;
+import testsCases.TestProblem;
 
 /**
  * Classe représentant un algorithme génétique pour résoudre le problème de sac à dos multidimensionnel.
@@ -18,6 +20,7 @@ public class GeneticAlgorithm {
     public int populationSize;
     public int iterations;
     public Bag bag;
+    public int optiFindAt;
 
     /**
      * Constructeur de l'algorithme génétique.
@@ -235,9 +238,10 @@ public class GeneticAlgorithm {
      * @return le meilleur sac trouvé
      */
     public Bag solve(double elitistRate, double mutationFactor, String mutationMethod, String crossOver,
-                     BiConsumer<Integer, Population> progressCallback) {
+                     BiConsumer<Integer, Population> progressCallback) throws IOException {
         Population newPopulation = null;
         boolean stop = false;
+        boolean optimalFound = false;
         int cmp = 1;
         while (!stop) {
             System.out.println("It n°: " + cmp++);
@@ -258,6 +262,11 @@ public class GeneticAlgorithm {
             }
             population = newPopulation;
             stop = (population.getBest().cost.stream().mapToInt(Integer::intValue).sum() >= population.getBest().value ||  cmp >= 500);
+            // TODO : Attention ici c'est juste pour nos check ! ça permets de savoir exactement à quelle itérations on trouve l'opti comme on connait notre résultat à trouver
+            if(population.getBest().value == TestProblem.readFromFile("src/testsCases/mknap2.txt").getOptimal() && !optimalFound){
+                this.optiFindAt = cmp;
+                optimalFound = true;
+            }
         }
         this.iterations = cmp;
         return newPopulation.getBest();

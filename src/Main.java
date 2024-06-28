@@ -16,11 +16,12 @@ public class Main {
         String mutationMethod = chooseMutationMethod(scanner);
         String crossoverType = chooseCrossoverType(scanner);
 
-        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 300);
+        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
         Bag solutionOptimale = algo.solve(0.7, 0.5, mutationMethod, crossoverType, null);
 
         System.out.println("\nSolution optimale trouvée :");
         System.out.println(solutionOptimale);
+        System.out.println(algo.optiFindAt);
 
         scanner.close();
     }
@@ -91,7 +92,7 @@ public class Main {
         return mutationMethod;
     }
 
-    // TODO : il faut retirer aussi le crossover ici du coup ? 
+    // TODO : il faut retirer aussi le crossover ici du coup ?
     private static String chooseCrossoverType(Scanner scanner) {
         System.out.println("\nChoix du type de croisement :");
         System.out.println("1. crossover");

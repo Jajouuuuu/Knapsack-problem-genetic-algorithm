@@ -59,6 +59,12 @@ public class TestProblem {
         return maximumCost;
     }
 
+    /**
+     * Retourne la valeur optimale pour ce problème.
+     * @return Valeur optimale.
+     */
+    public Integer getOptimal() { return optimal; }
+
     @Override
     public String toString() {
         return "TestProblem{" +

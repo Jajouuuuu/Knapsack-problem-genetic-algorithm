@@ -25,7 +25,7 @@ public class ResultCSV {
      */
     public ResultCSV(String filePath) throws IOException {
         fileWriter = new FileWriter(filePath);
-        fileWriter.append("Iteration, Best Fitness,Elitisme Rate, Mutation Rate, Population Size, Crossover Type, Mutation Type, Duration (ms)\n");
+        fileWriter.append("Iteration, Best Fitness,Elitisme Rate, Mutation Rate, Population Size, Crossover Type, Mutation Type, Duration (ms), Opti Find At\n");
     }
 
     /**
@@ -42,9 +42,9 @@ public class ResultCSV {
      * @throws IOException En cas d'erreur d'entrée/sortie lors de l'écriture dans le fichier.
      */
     public synchronized void addResult(int iteration, double bestFitness, double elitismeRate, double mutationRate, int populationSize,
-                                       String crossoverType, String mutationType, long duration) throws IOException {
-        fileWriter.append(String.format("%d, %.2f, %.2f, %.2f, %d, %s, %s, %d\n",
-                iteration, bestFitness, elitismeRate, mutationRate, populationSize, crossoverType, mutationType, duration));
+                                       String crossoverType, String mutationType, long duration, int optiFindAt) throws IOException {
+        fileWriter.append(String.format("%d, %.2f, %.2f, %.2f, %d, %s, %s, %d, %d\n",
+                iteration, bestFitness, elitismeRate, mutationRate, populationSize, crossoverType, mutationType, duration, optiFindAt));
     }
 
     /**
@@ -66,7 +66,7 @@ public class ResultCSV {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         // Chemin pour l'enregistrement du CSV
-        ResultCSV resultCSV = new ResultCSV("results_nouvelle_version_algo_test_pop_300.csv");
+        ResultCSV resultCSV = new ResultCSV("results_nouvelle_version_algo_test_pop_100.csv");
 
         // Création d'une instance du problème
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
@@ -87,13 +87,13 @@ public class ResultCSV {
                         executorService.submit(() -> {
                             try {
                                 long startTime = System.currentTimeMillis();
-                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 150);
+                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
                                 Bag solutionOptimale = algo.solve(elitismRate, mutationRate, mutationType, crossoverType, null);
                                 long endTime = System.currentTimeMillis();
                                 long duration = endTime - startTime;
 
                                 synchronized (resultCSV) {
-                                    resultCSV.addResult(algo.iterations, solutionOptimale.value, elitismRate, mutationRate, algo.populationSize, crossoverType, mutationType, duration);
+                                    resultCSV.addResult(algo.iterations, solutionOptimale.value, elitismRate, mutationRate, algo.populationSize, crossoverType, mutationType, duration, algo.optiFindAt);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
