@@ -1,14 +1,19 @@
 package representation;
 
 import java.util.*;
-
+/**
+ * Classe représentant un sac à dos.
+ */
 public class Bag implements Comparable<Bag> {
     public static List<BagObject> bagObjects;
-    public static List<Integer> maximumCost; // Déplacé ici
+    public static List<Integer> maximumCost;
     public List<Integer> content;
     public List<Integer> cost;
     public int value;
 
+    /**
+     * Constructeur par défaut de la classe Bag.
+     */
     public Bag() {
         this.content = new ArrayList<>();
         this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
@@ -21,13 +26,19 @@ public class Bag implements Comparable<Bag> {
         this.value = 0;
     }
 
+    /**
+     * Constructeur avec paramètres de la classe Bag.
+     *
+     * @param costs Liste des coûts des objets
+     * @param values Liste des valeurs des objets
+     * @param maxCost Liste des coûts maximums autorisés
+     */
     public Bag(List<List<Integer>> costs, List<Integer> values, List<Integer> maxCost) {
         bagObjects = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             bagObjects.add(new BagObject(i, costs.get(i), values.get(i)));
         }
         initializeObjects(bagObjects);
-
         this.content = new ArrayList<>();
         this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
         for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
@@ -40,11 +51,20 @@ public class Bag implements Comparable<Bag> {
         this.maximumCost = maxCost;
     }
 
+    /**
+     * Initialise les objets du sac à dos.
+     *
+     * @param objList Liste des objets à ajouter au sac à dos
+     */
     public static void initializeObjects(List<BagObject> objList) {
         bagObjects = objList;
     }
 
-    // Méthode pour créer un sac avec des objets ajoutés de manière aléatoire
+    /**
+     * Crée un sac avec des objets ajoutés de manière aléatoire.
+     *
+     * @return un nouveau sac avec des objets aléatoires
+     */
     public static Bag createRandomBag() {
         Bag newBag = new Bag();
         List<Integer> indices = new ArrayList<>();
@@ -60,7 +80,12 @@ public class Bag implements Comparable<Bag> {
         return newBag;
     }
 
-    // Si le sac est valide alors ajout
+    /**
+     * Vérifie si l'ajout d'un objet au sac est valide.
+     *
+     * @param n Indice de l'objet à ajouter
+     * @return vrai si l'ajout est valide, faux sinon
+     */
     public boolean isValidAdd(int n) {
         for (int j = 0; j < cost.size(); j++) {
             if (this.cost.get(j) + bagObjects.get(n).getCost().get(j) > this.maximumCost.get(j)) {
@@ -70,8 +95,11 @@ public class Bag implements Comparable<Bag> {
         return true;
     }
 
-    // TODO : check si on ajoute bien un bagObect avec cette méthode et que ça update bien les cout et utilité pour toutes les dimensions
-    // j'ai réintégré la méthode chelou addCostandValue directement ici je comprennais pas pourquoi c'était split si on s'en resservait pas ??
+    /**
+     * Ajoute un objet au sac en mettant à jour les coûts et la valeur.
+     *
+     * @param n Indice de l'objet à ajouter
+     */
     public void addBagObject(int n) {
         if (content.get(n) == 1) return;
         for (int j = 0; j < bagObjects.get(n).costDimension(); j++) {
@@ -81,8 +109,11 @@ public class Bag implements Comparable<Bag> {
         content.set(n, 1);
     }
 
-    // TODO : check si on remove bien un bagObect avec cette méthode et que ça update bien les cout et utilité pour toutes les dimensions
-    // j'ai réintégré la méthode chelou removeCostandValue directement ici je comprennais pas pourquoi c'était split si on s'en resservait pas ??
+    /**
+     * Retire un objet du sac en mettant à jour les coûts et la valeur.
+     *
+     * @param n Indice de l'objet à retirer
+     */
     public void removeBagObject(int n) {
         if (content.get(n) == 0) return;
         for (int j = 0; j < costDimension(); j++) {
@@ -92,8 +123,11 @@ public class Bag implements Comparable<Bag> {
         content.set(n, 0);
     }
 
-    // Méthode de réparation qu'on applique directement sur un sac
-    // maximumCost en paramètre car on check si on dépasse pas
+    /**
+     * Répare un sac en retirant les objets non valides et en ajoutant des objets valides.
+     *
+     * @param maximumCost Liste des coûts maximums autorisés
+     */
     public void reparation(List<Integer> maximumCost) {
         List<Integer> indices = new ArrayList<>();
         for (int i = 0; i < this.content.size(); i++) {
@@ -103,7 +137,7 @@ public class Bag implements Comparable<Bag> {
                 bagObjects.get(b).value,
                 bagObjects.get(a).value
         ));
-        // sort works
+        // TODO : je sais pas si on laisse le commentaire ?
         // c'est comme le répare qu'il y a dans mutation.
         for (int i = indices.size() - 1; i >= 0; i--) {
             if (this.content.get(indices.get(i)) == 1 && !this.isValid(maximumCost)) {
@@ -118,6 +152,11 @@ public class Bag implements Comparable<Bag> {
 
     }
 
+    /**
+     * Crée une copie du sac.
+     *
+     * @return une copie du sac
+     */
     public Bag copy() {
         Bag copy = new Bag();
         for (int i = 0; i < this.content.size(); i++) {
@@ -128,10 +167,21 @@ public class Bag implements Comparable<Bag> {
         return copy;
     }
 
+    /**
+     * Retourne le nombre de dimensions de coût.
+     *
+     * @return le nombre de dimensions de coût
+     */
     public int costDimension() {
         return cost.size();
     }
 
+    /**
+     * Vérifie si le sac est valide en comparant les coûts aux coûts maximums autorisés.
+     *
+     * @param maximumCost Liste des coûts maximums autorisés
+     * @return vrai si le sac est valide, faux sinon
+     */
     public boolean isValid(List<Integer> maximumCost) {
         for (int i = 0; i < costDimension(); i++) {
             if (this.cost.get(i) > maximumCost.get(i)) {
@@ -141,6 +191,12 @@ public class Bag implements Comparable<Bag> {
         return true;
     }
 
+    /**
+     * Vérifie si le contenu de ce sac est identique à celui d'un autre sac.
+     *
+     * @param bag le sac à comparer
+     * @return vrai si les contenus sont identiques, faux sinon
+     */
     public boolean hasSameContent(Bag bag) {
         for (int i = 0; i < this.content.size(); i++) {
             if (!bag.content.get(i).equals(this.content.get(i))) {

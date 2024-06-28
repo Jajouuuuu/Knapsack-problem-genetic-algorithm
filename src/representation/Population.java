@@ -1,9 +1,11 @@
 package representation;
 
-import algorithm.GeneticAlgorithm;
-
 import java.util.*;
 
+/**
+ * Représente une population d'objets de type Bag.
+ * Une population contient une liste ordonnée et non ordonnée de sacs (Bag).
+ */
 public class Population {
     private ArrayList<Bag> population;
     private TreeSet<Bag> orderedPopulation;
@@ -18,6 +20,7 @@ public class Population {
 
     /**
      * Adds a representation.Bag to the population.
+     *
      * @param bag, the representation.Bag to be added.
      */
     public void add(Bag bag) {
@@ -35,6 +38,7 @@ public class Population {
 
     /**
      * Returns the size of the population.
+     *
      * @return the size of the population.
      */
     public int size() {
@@ -43,6 +47,7 @@ public class Population {
 
     /**
      * This methods returns the ith individual of the population.
+     *
      * @param i, the index of the desired element.
      * @return the ith individual of the population.
      */
@@ -55,6 +60,7 @@ public class Population {
      * This method provides an iterator on the representation.Population of individuals.
      * This iterator makes it possible to iterate over individuals in
      * descending order of fitness.
+     *
      * @return an iterator on the representation.Population of individuals.
      */
     public Iterator<Bag> iterator() {
@@ -63,6 +69,7 @@ public class Population {
 
     /**
      * Replaces the least fit individual of the population by a given individual.
+     *
      * @param newBag the bag to be added to the population.
      */
     public void replace(Bag newBag) {
@@ -76,6 +83,7 @@ public class Population {
      * Performs a flip mutation on the population of bags. For each bag, a number of items
      * are randomly selected and flipped (added or removed) based on the mutation factor.
      * If the resulting bag is not valid, it is repaired to ensure it meets the maximum cost constraints.
+     *
      * @param maximumCost The list of maximum costs used to validate the bags.
      * @param mutationFactor The probability of a mutation occurring and the size of the mutation.
      */
@@ -106,6 +114,7 @@ public class Population {
      * Performs a swap mutation on the population of bags. For each bag, two items are
      * randomly selected and swapped based on the mutation factor. If the resulting
      * bag is not valid, it is repaired to ensure it meets the maximum cost constraints.
+     *
      * @param maximumCost The list of maximum costs used to validate the bags.
      * @param mutationFactor The probability of a mutation occurring.
      */
@@ -143,6 +152,7 @@ public class Population {
      * of items is selected, scrambled (shuffled), and then applied back to the bag's content
      * based on the mutation factor. If the resulting bag is not valid, it is repaired to ensure
      * it meets the maximum cost constraints.
+     *
      * @param maximumCost The list of maximum costs used to validate the bags.
      * @param mutationFactor The probability of a mutation occurring and the size of the mutated subset.
      */
@@ -189,6 +199,7 @@ public class Population {
      * of items is selected, inverted (reversed), and then applied back to the bag's content
      * based on the mutation factor. If the resulting bag is not valid, it is repaired to ensure
      * it meets the maximum cost constraints.
+     *
      * @param maximumCost The list of maximum costs used to validate the bags.
      * @param mutationFactor The probability of a mutation occurring and the size of the mutated subset.
      */
@@ -232,6 +243,7 @@ public class Population {
 
     /**
      * Provides the best individual in the population.
+     *
      * @return the best individual (representation.Bag) in the population.
      */
     public Bag getBest() {
@@ -245,6 +257,11 @@ public class Population {
                 "population=" + population;
     }
 
+    /**
+     * Retourne la taille de la population ordonnée.
+     *
+     * @return La taille de la population ordonnée.
+     */
     public int getOrderedPopulationsize(){
         return orderedPopulation.size();
     }

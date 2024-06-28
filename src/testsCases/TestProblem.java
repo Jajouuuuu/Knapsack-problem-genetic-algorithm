@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe représentant une instance du problème du sac à dos multidimensionnel.
+ * Contient les valeurs, les coûts et les contraintes définies à partir d'un fichier.
+ */
 public class TestProblem {
 
     private List<Integer> values;
@@ -13,6 +17,14 @@ public class TestProblem {
     private List<Integer> maximumCost;
     private Integer optimal;
 
+    /**
+     * Constructeur initialisant un problème de test avec ses paramètres.
+     *
+     * @param values Liste des valeurs des objets.
+     * @param costs Matrice des coûts pour chaque objet et chaque contrainte.
+     * @param maximumCost Liste des coûts maximaux permis pour chaque contrainte.
+     * @param optimal Valeur optimale pour ce problème.
+     */
     public TestProblem(List<Integer> values, List<List<Integer>> costs, List<Integer> maximumCost, Integer optimal) {
         this.values = values;
         this.costs = costs;
@@ -20,20 +32,31 @@ public class TestProblem {
         this.optimal = optimal;
     }
 
+    /**
+     * Retourne les valeurs des objets.
+     *
+     * @return Liste des valeurs des objets.
+     */
     public List<Integer> getValues() {
         return values;
     }
 
+    /**
+     * Retourne la matrice des coûts pour chaque objet et chaque contrainte.
+     *
+     * @return Matrice des coûts.
+     */
     public List<List<Integer>> getCosts() {
         return costs;
     }
 
+    /**
+     * Retourne la liste des coûts maximaux permis pour chaque contrainte.
+     *
+     * @return Liste des coûts maximaux.
+     */
     public List<Integer> getMaximumCost() {
         return maximumCost;
-    }
-
-    public Integer getOptimal() {
-        return optimal;
     }
 
     @Override
@@ -46,6 +69,11 @@ public class TestProblem {
                 '}';
     }
 
+    /**
+     * Redéfinition de la méthode toString pour afficher les détails du problème.
+     *
+     * @return Chaîne représentant le problème avec ses valeurs, coûts et contraintes.
+     */
     public static TestProblem readFromFile(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
