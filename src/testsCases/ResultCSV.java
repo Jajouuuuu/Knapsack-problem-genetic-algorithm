@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class ResultCSV {
-    private FileWriter fileWriter;
+    /*private FileWriter fileWriter;
 
     public ResultCSV(String filePath) throws IOException {
         fileWriter = new FileWriter(filePath);
@@ -72,4 +72,4 @@ public class ResultCSV {
 
         resultCSV.close();
     }
-}
+*/}

@@ -3,8 +3,8 @@ package representation;
 import java.util.List;
 
 public class BagObject {
-    private int id; // TODO : id c'est l'indice du BagObject c'est bien ça ?
-    private List<Integer> cost; // liste de coût en dimension n
+    protected int id; // TODO : id c'est l'indice du BagObject c'est bien ça ?
+    protected List<Integer> cost; // liste de coût en dimension n
     public int value; // utilité de l'objet, on doit pas aussi avoir une dimension TODO : refacto à utility le nom de la variable non ?
 
 

@@ -1,15 +1,13 @@
 package representation;
 
-import algorithm.GeneticAlgorithm;
-
 import java.util.*;
 
 public class Bag implements Comparable<Bag> {
-    // TODO : refacto nos visibilité on peut pas avoir des attributs publiques partout c'est dég faut qu'on mette des accesseurs
-    public static List<BagObject> bagObjects; // BagObjects pouvant être mit dans le sac
-    public List<Integer> content; // Liste de 1 ou 0 indiquant si l'objet est présent ou non dans le sac
-    public List<Integer> cost; // Liste de dimension n indiquant les coût du sac TODO : refacto à budget pour coller avec l'énoncé de TP sinon on confond avec cost des objets je trouve
-    public int value; // Valeur du sac (utilité ?)
+    public static List<BagObject> bagObjects;
+    public static List<Integer> maximumCost; // Déplacé ici
+    public List<Integer> content;
+    public List<Integer> cost;
+    public int value;
 
     public Bag() {
         this.content = new ArrayList<>();
@@ -17,12 +15,31 @@ public class Bag implements Comparable<Bag> {
         for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
             this.cost.add(0);
         }
-        for(int i = 0; i < bagObjects.size(); i++){
+        for (int i = 0; i < bagObjects.size(); i++) {
             this.content.add(0);
         }
         this.value = 0;
     }
-    // Méthode statique pour initialiser les objets
+
+    public Bag(List<List<Integer>> costs, List<Integer> values, List<Integer> maxCost) {
+        bagObjects = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            bagObjects.add(new BagObject(i, costs.get(i), values.get(i)));
+        }
+        initializeObjects(bagObjects);
+
+        this.content = new ArrayList<>();
+        this.cost = new ArrayList<>(bagObjects.get(0).costDimension());
+        for (int i = 0; i < bagObjects.get(0).costDimension(); i++) {
+            this.cost.add(0);
+        }
+        for (int i = 0; i < bagObjects.size(); i++) {
+            this.content.add(0);
+        }
+        this.value = 0;
+        this.maximumCost = maxCost;
+    }
+
     public static void initializeObjects(List<BagObject> objList) {
         bagObjects = objList;
     }
@@ -46,7 +63,7 @@ public class Bag implements Comparable<Bag> {
     // Si le sac est valide alors ajout
     public boolean isValidAdd(int n) {
         for (int j = 0; j < cost.size(); j++) {
-            if (this.cost.get(j) + bagObjects.get(n).getCost().get(j) > GeneticAlgorithm.maximumCost.get(j)) {
+            if (this.cost.get(j) + bagObjects.get(n).getCost().get(j) > this.maximumCost.get(j)) {
                 return false;
             }
         }
@@ -88,7 +105,7 @@ public class Bag implements Comparable<Bag> {
         ));
         // sort works
         // c'est comme le répare qu'il y a dans mutation.
-        for (int i = indices.size()-1; i >= 0; i--) {
+        for (int i = indices.size() - 1; i >= 0; i--) {
             if (this.content.get(indices.get(i)) == 1 && !this.isValid(maximumCost)) {
                 this.removeBagObject(indices.get(i));
             }
@@ -103,15 +120,15 @@ public class Bag implements Comparable<Bag> {
 
     public Bag copy() {
         Bag copy = new Bag();
-        for(int i = 0; i<this.content.size(); i++){
-            if(this.content.get(i) == 1){
+        for (int i = 0; i < this.content.size(); i++) {
+            if (this.content.get(i) == 1) {
                 copy.addBagObject(i);
             }
         }
         return copy;
     }
 
-    public int costDimension(){
+    public int costDimension() {
         return cost.size();
     }
 
@@ -124,9 +141,9 @@ public class Bag implements Comparable<Bag> {
         return true;
     }
 
-    public boolean hasSameContent(Bag bag){
-        for(int i = 0; i<this.content.size(); i++){
-            if(!bag.content.get(i).equals(this.content.get(i))){
+    public boolean hasSameContent(Bag bag) {
+        for (int i = 0; i < this.content.size(); i++) {
+            if (!bag.content.get(i).equals(this.content.get(i))) {
                 return false;
             }
         }
@@ -135,18 +152,18 @@ public class Bag implements Comparable<Bag> {
 
     @Override
     public String toString() {
-        return "The bag's cost : " + cost + ", value : " + value + ", and elements in the bag : " + content;
+        return "The bag's cost : " + this.cost + ", value : " + this.value + ", and elements in the bag : " + this.content;
     }
 
     @Override
     public int compareTo(Bag o) {
-        if(this == o || this.hasSameContent(o))
+        if (this == o || this.hasSameContent(o))
             return 0;
         int fitness1 = this.value, fitness2 = o.value;
-        if(fitness1 > fitness2)
+        if (fitness1 > fitness2)
             return 1;
         else {
-            if(fitness1 < fitness2)
+            if (fitness1 < fitness2)
                 return -1;
             else {
                 int totalCost1 = this.cost.stream().mapToInt(Integer::intValue).sum();

@@ -2,46 +2,34 @@ package algorithm;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-
 import representation.Bag;
 import representation.BagObject;
 import representation.Couple;
 import representation.Population;
 
 public class GeneticAlgorithm {
-    // TODO : faudrait peut-être refacto les visibilités de nos attributs ? Je suis pas sûr qu'on ai besoin d'attributs public parttout ?
-    public static List<Integer> maximumCost;
     public List<Integer> values;
-
-    // TODO : check si on a réellement besoin des coûts ici où si on peut les mettre directement dans la classe Bag ?
-    public List<List<Integer>> costs;
-    public List<BagObject> BagObjects;
     public Population population;
     public int populationSize;
     public int iterations;
+    public Bag bag;
 
-    public GeneticAlgorithm(List<Integer> maximumCost, List<List<Integer>> costs, List<Integer> values, int k) {
-        GeneticAlgorithm.maximumCost = maximumCost;
-        this.values = values;
-        this.costs = costs;
-        this.BagObjects = new ArrayList<>();
+    public GeneticAlgorithm(Bag bag, int k) {
+        this.values = new ArrayList<>();
+        this.bag = bag;
+        for (BagObject obj : Bag.bagObjects) {
+            this.values.add(obj.value);
+        }
         this.populationSize = 2 * k;
         this.iterations = 0;
-        for (int i = 0; i < values.size(); i++) {
-            BagObjects.add(new BagObject(i, costs.get(i), values.get(i)));
-        }
-        Bag.initializeObjects(BagObjects);
-        population = new Population();
+        this.population = new Population();
         for (int i = 0; i < populationSize; i++) {
-            Bag bag = Bag.createRandomBag();
-            //reparation(bag);
-            population.add(bag);
+            Bag newBag = Bag.createRandomBag();
+            population.add(newBag);
         }
         System.out.println("here");
         System.out.println(this.populationSize);
     }
-
-    // TODO : check si on passe la proba de cross over en paramètre ?
 
     public Population crossover(ArrayList<Couple> parents) {
         Population res = new Population();
@@ -65,11 +53,11 @@ public class GeneticAlgorithm {
 
 
     /*Le crossover à un point (Single-point crossover) est l'une des méthodes les plus simples et
-    * les plus couramment utilisées pour le croisement dans les algorithmes génétiques.
-    * Il s'applique particulièrement bien aux représentations binaires et autres structures linéaires.
-    * Le principe du single-point crossover est de sélectionner un point unique de crossover dans les génomes
-    * des parents, puis d'échanger les segments de gènes après ce point pour créer deux nouveaux enfants.
-    *  */
+     * les plus couramment utilisées pour le croisement dans les algorithmes génétiques.
+     * Il s'applique particulièrement bien aux représentations binaires et autres structures linéaires.
+     * Le principe du single-point crossover est de sélectionner un point unique de crossover dans les génomes
+     * des parents, puis d'échanger les segments de gènes après ce point pour créer deux nouveaux enfants.
+     *  */
     public Population singlePointCrossover(ArrayList<Couple> parents) {
         Population res = new Population();
         for (Couple parent : parents) {
@@ -97,17 +85,17 @@ public class GeneticAlgorithm {
         Population res = new Population();
         for (Couple parent : parents) {
             if (Math.random() < 0.5) {
-            Bag child1 = new Bag();
-            Bag child2 = new Bag();
-            int length = parent.mother.content.size();
-            int crossoverPoint1 = (int) (Math.random() * length);
-            int crossoverPoint2 = (int) (Math.random() * length);
+                Bag child1 = new Bag();
+                Bag child2 = new Bag();
+                int length = parent.mother.content.size();
+                int crossoverPoint1 = (int) (Math.random() * length);
+                int crossoverPoint2 = (int) (Math.random() * length);
 
-            if (crossoverPoint1 > crossoverPoint2) {
-                int temp = crossoverPoint1;
-                crossoverPoint1 = crossoverPoint2;
-                crossoverPoint2 = temp;
-            }
+                if (crossoverPoint1 > crossoverPoint2) {
+                    int temp = crossoverPoint1;
+                    crossoverPoint1 = crossoverPoint2;
+                    crossoverPoint2 = temp;
+                }
 
 
                 for (int i = 0; i < length; i++) {
@@ -173,6 +161,7 @@ de crossover à point unique ou à deux points.*/
         int cmp = 1;
         while (!stop) {
             System.out.println("It n°: " + cmp++);
+            System.out.println(population.getBest());
             switch (crossOver) {
                 case "crossover":
                     newPopulation = crossover(selection());
@@ -192,24 +181,24 @@ de crossover à point unique ou à deux points.*/
 
             switch (mutationMethod) {
                 case "flipMutation":
-                    newPopulation.flipMutation(maximumCost, mutationFactor);
+                    newPopulation.flipMutation(Bag.maximumCost, mutationFactor);
                     break;
                 case "swapMutation":
-                    newPopulation.swapMutation(maximumCost, mutationFactor);
+                    newPopulation.swapMutation(Bag.maximumCost, mutationFactor);
                     break;
                 case "scrambleMutation":
-                    newPopulation.scrambleMutation(maximumCost, mutationFactor);
+                    newPopulation.scrambleMutation(Bag.maximumCost, mutationFactor);
                     break;
                 case "inversionMutation":
-                    newPopulation.inversionMutation(maximumCost, mutationFactor);
+                    newPopulation.inversionMutation(Bag.maximumCost, mutationFactor);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported method type: " + mutationMethod);
             }
 
             for (int i = 0; i < newPopulation.size(); i++) {
-                if (!newPopulation.get(i).isValid(maximumCost)) {
-                    newPopulation.get(i).reparation(maximumCost);
+                if (!newPopulation.get(i).isValid(Bag.maximumCost)) {
+                    newPopulation.get(i).reparation(Bag.maximumCost);
                 }
             }
 
@@ -255,8 +244,8 @@ de crossover à point unique ou à deux points.*/
     public String toString() {
         return "algorithm.GeneticAlgorithm{" +
                 "values=" + values +
-                ", costs=" + costs +
-                ", BagObjects=" + BagObjects +
+                ", costs=" + Bag.maximumCost +
+                ", BagObjects=" + Bag.bagObjects +
                 ", population=" + population +
                 ", populationSize=" + populationSize +
                 '}';

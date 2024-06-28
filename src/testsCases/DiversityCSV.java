@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DiversityCSV {
-    private FileWriter fileWriter;
+   /* private FileWriter fileWriter;
 
     public DiversityCSV(String filePath) throws IOException {
         fileWriter = new FileWriter(filePath);
@@ -61,4 +61,4 @@ public class DiversityCSV {
         }
         diversityCSV.close();
     }
-}
+*/}
