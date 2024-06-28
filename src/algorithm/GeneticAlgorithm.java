@@ -96,6 +96,7 @@ public class GeneticAlgorithm {
     public Population twoPointCrossover(ArrayList<Couple> parents) {
         Population res = new Population();
         for (Couple parent : parents) {
+            if (Math.random() < 0.5) {
             Bag child1 = new Bag();
             Bag child2 = new Bag();
             int length = parent.mother.content.size();
@@ -109,17 +110,21 @@ public class GeneticAlgorithm {
             }
 
 
-            for (int i = 0; i < length; i++) {
-                if (i < crossoverPoint1 || i >= crossoverPoint2) {
-                    child1.addBagObject(parent.father.content.get(i));
-                    child2.addBagObject(parent.mother.content.get(i));
-                } else {
-                    child1.addBagObject(parent.mother.content.get(i));
-                    child2.addBagObject(parent.father.content.get(i));
+                for (int i = 0; i < length; i++) {
+                    if (i < crossoverPoint1 || i >= crossoverPoint2) {
+                        child1.addBagObject(parent.father.content.get(i));
+                        child2.addBagObject(parent.mother.content.get(i));
+                    } else {
+                        child1.addBagObject(parent.mother.content.get(i));
+                        child2.addBagObject(parent.father.content.get(i));
+                    }
                 }
+                res.add(child1);
+                res.add(child2);
+            } else {
+                res.add(parent.mother);
+                res.add(parent.father);
             }
-            res.add(child1);
-            res.add(child2);
         }
         return res;
     }
@@ -134,19 +139,24 @@ de crossover à point unique ou à deux points.*/
     public Population uniformCrossover(ArrayList<Couple> parents) {
         Population res = new Population();
         for (Couple parent : parents) {
-            Bag child1 = new Bag();
-            Bag child2 = new Bag();
-            for (int j = 0; j < parents.get(0).father.content.size(); j++) {
-                if (Math.random() < 0.5) {
-                    child1.addBagObject(parent.father.content.get(j));
-                    child2.addBagObject(parent.mother.content.get(j));
-                } else {
-                    child1.addBagObject(parent.mother.content.get(j));
-                    child2.addBagObject(parent.father.content.get(j));
+            if (Math.random() < 0.5) {
+                Bag child1 = new Bag();
+                Bag child2 = new Bag();
+                for (int j = 0; j < parents.get(0).father.content.size(); j++) {
+                    if (Math.random() < 0.5) {
+                        child1.addBagObject(parent.father.content.get(j));
+                        child2.addBagObject(parent.mother.content.get(j));
+                    } else {
+                        child1.addBagObject(parent.mother.content.get(j));
+                        child2.addBagObject(parent.father.content.get(j));
+                    }
                 }
+                res.add(child1);
+                res.add(child2);
+            } else {
+                res.add(parent.mother);
+                res.add(parent.father);
             }
-            res.add(child1);
-            res.add(child2);
         }
         return res;
     }
