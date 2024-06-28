@@ -31,9 +31,9 @@ public class ResultCSV {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
-        ResultCSV resultCSV = new ResultCSV("results_pop_1000_9.csv");
+        ResultCSV resultCSV = new ResultCSV("results_pop_1000_10.csv");
 
-        int populationSize = 1000;
+        int populationSize = 100;
         List<Double> elitismRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
         List<Double> mutationRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
         List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
@@ -51,7 +51,7 @@ public class ResultCSV {
                                 long startTime = System.currentTimeMillis();
                                 int maxIt = (int) ((int) populationSize * 0.30);
                                 GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), populationSize);
-                                Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, populationSize, mutationType, crossoverType, null);
+                                Bag solutionOptimale = algo.solve(elitismRate, maxIt, mutationRate, mutationType, crossoverType, null);
                                 long endTime = System.currentTimeMillis();
                                 long duration = endTime - startTime;
 

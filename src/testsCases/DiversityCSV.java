@@ -1,8 +1,7 @@
 package testsCases;
 
 import algorithm.GeneticAlgorithm;
-import representation.Bag;
-import representation.Population;
+
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class DiversityCSV {
                         GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), populationSize);
                         // /!\ ça c'est pour sauvegader la diversité toutes les 10 itérations de l'algo -> j'ajoute un BiConsumer dans la méthode solve pour ça
                         // on va l'utiliser qu'ici ce paramètre donc quand on s'en sert pas on peut juste laisser le paramètre à null et ca changera pas l'algo
-                        algo.solve(elitismRate, 100, mutationRate, populationSize, mutationType, crossoverType,
+                        algo.solve(elitismRate, 100, mutationRate, mutationType, crossoverType,
                                 (iteration, population) -> {
                                     try {
                                         int diversity = population.getOrderedPopulationsize(); // Assuming this method gives diversity count

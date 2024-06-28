@@ -166,7 +166,7 @@ de crossover à point unique ou à deux points.*/
     // TODO : j'ai retiré le mutation rate comme on s'en servait pas, je pense que y'a du avoir un micmac avec mutationFactor
     // on peut le remettre si besoin, faudrait vérifier si cette fonction reste correcte
     // TODO : je comprends pas à quoi sert la targetValue ? comment on peut passer en paramètre l'optimale qu'on cherche ?
-    public Bag solve(double elitistRate, int maxIt, double mutationFactor, int populationSize, String mutationMethod, String crossOver,
+    public Bag solve(double elitistRate, int maxIt, double mutationFactor, String mutationMethod, String crossOver,
                      BiConsumer<Integer, Population> progressCallback) {
         Population newPopulation = null;
         boolean stop = false;
@@ -215,7 +215,7 @@ de crossover à point unique ou à deux points.*/
 
             Iterator<Bag> it = this.population.iterator();
 
-            for (int j = 0; j < elitistRate * populationSize && j < population.getOrderedPopulationsize(); j++) {
+            for (int j = 0; j < elitistRate * this.populationSize && j < population.getOrderedPopulationsize(); j++) {
                 newPopulation.replace(it.next());
             }
 

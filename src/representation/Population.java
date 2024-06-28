@@ -248,37 +248,4 @@ public class Population {
     public int getOrderedPopulationsize(){
         return orderedPopulation.size();
     }
-
-    public static void main(String[] args) {
-
-        List<Integer> maximumCost = List.of(80, 96, 20, 36, 44, 48, 10, 18, 22, 24);
-        List<List<Integer>> costs = List.of(
-                List.of(8,8,3,5,5,5,0,3,3,3),
-                List.of(12,12,6,10,13,13,0,0,2,2),
-                List.of(13,13,4,8,8,8,0,4,4,4),
-                List.of(64,75,18,32,42,48,0,0,0,8),
-                List.of(22,22,6, 6, 6,6,8,8,8,8),
-                List.of(41,41,4,12,20,20,0,0,4,4)
-
-
-           /*     List.of(8, 12, 13, 64, 22, 41),
-                List.of(8, 12, 13, 75, 22, 41),
-                List.of(3, 6, 4, 18, 6, 4),
-                List.of(5, 10, 8, 32, 6, 12),
-                List.of(5, 13, 8, 42, 6, 20),
-                List.of(5, 13, 8, 48, 6, 20),
-                List.of(0, 0, 0, 0, 8, 0),
-                List.of(3, 0, 4, 0, 8, 0),
-                List.of(3, 2, 4, 0, 8, 4),
-                List.of(3, 2, 4, 8, 8, 4)
-                */
-
-        );
-        List<Integer> values = List.of(100, 600, 1200, 2400,500, 2000);
-        GeneticAlgorithm algo = new GeneticAlgorithm(maximumCost, costs, values, 500);
-
-        algo.population.scrambleMutation(maximumCost, 0.3);
-
-    }
-
 }

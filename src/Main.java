@@ -89,12 +89,11 @@ public class Main {
        List<Integer> maximumCost = List.of(800, 650, 550, 550, 650);*/
         TestProblem testProblem = readFromFile("src/testsCases/mknap4.txt");
         System.out.println(testProblem);
-        GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), 500);
-        int maxIt = 300;
-        int taillePopulation = 1000;
+        GeneticAlgorithm algo = new GeneticAlgorithm(testProblem.getMaximumCost(), testProblem.getCosts(), testProblem.getValues(), 250);
+        int maxIt = algo.populationSize;
         String mutationMethod = "flipMutation";     // either : flipMutation, swapMutation, scrambleMutation or inversionMutation
         String crossOver = "crossover";  // either : crossover, singlePointCrossover, twoPointCrossover, uniformCrossover
-        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, taillePopulation, mutationMethod, crossOver, null);
+        Bag solution_optimale = algo.solve(0.1, maxIt, 0.4, mutationMethod, crossOver, null);
         System.out.println(solution_optimale);
 /*
 
