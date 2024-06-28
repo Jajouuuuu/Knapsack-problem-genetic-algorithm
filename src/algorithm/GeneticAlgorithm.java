@@ -37,6 +37,8 @@ public class GeneticAlgorithm {
             //reparation(bag);
             population.add(bag);
         }
+        System.out.println("here");
+        System.out.println(this.populationSize);
     }
 
     // TODO : check si on passe la proba de cross over en paramètre ?

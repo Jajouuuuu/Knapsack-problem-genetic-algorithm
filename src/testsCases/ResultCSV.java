@@ -31,10 +31,10 @@ public class ResultCSV {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
-        ResultCSV resultCSV = new ResultCSV("results_pop_1000.csv");
+        ResultCSV resultCSV = new ResultCSV("results_pop_1000_2.csv");
 
         int populationSize = 1000;
-        List<Double> elitismRates = Arrays.asList(0.05, 0.10, 0.15, 0.20, 0.25, 0.3, 0.4, 0.5);
+        List<Double> elitismRates = Arrays.asList(0.25, 0.3, 0.4, 0.5);
         List<Double> mutationRates = Arrays.asList(0.2, 0.4, 0.6, 0.8);
         List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
         List<String> mutationTypes = Arrays.asList("flipMutation", "swapMutation", "scrambleMutation", "inversionMutation");
