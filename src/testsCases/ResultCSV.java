@@ -25,7 +25,7 @@ public class ResultCSV {
      */
     public ResultCSV(String filePath) throws IOException {
         fileWriter = new FileWriter(filePath);
-        fileWriter.append("Iteration, Best Fitness,Elitisme Rate, Mutation Rate, Population Size, Crossover Type, Mutation Type, Duration (ms), Opti Find At\n");
+        fileWriter.append("Iteration,Best Fitness,Elitism Rate,Mutation Rate,Population Size,Crossover Type,Mutation Type,Duration (ms),Opti Find At\n");
     }
 
     /**
@@ -66,16 +66,16 @@ public class ResultCSV {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         // Chemin pour l'enregistrement du CSV
-        ResultCSV resultCSV = new ResultCSV("results_nouvelle_version_algo_test_pop_100.csv");
+        ResultCSV resultCSV = new ResultCSV("new_results_pop_350_2.csv");
 
         // Création d'une instance du problème
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
         Bag bag = new Bag(testProblem.getCosts(), testProblem.getValues(), testProblem.getMaximumCost());
 
-        List<Double> elitismRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
-        List<Double> mutationRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
-        List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
-        List<String> mutationTypes = Arrays.asList("scrambleMutation", "inversionMutation");
+        List<Double> elitismRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
+        List<Double> mutationRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
+        List<String> crossoverTypes = Arrays.asList("uniformCrossover", "singlePointCrossover", "twoPointCrossover");
+        List<String> mutationTypes = Arrays.asList("flipMutation", "swapMutation", "scrambleMutation", "inversionMutation");
 
         int numThreads = Runtime.getRuntime().availableProcessors() * 2;
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
@@ -87,7 +87,7 @@ public class ResultCSV {
                         executorService.submit(() -> {
                             try {
                                 long startTime = System.currentTimeMillis();
-                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
+                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 350);
                                 Bag solutionOptimale = algo.solve(elitismRate, mutationRate, mutationType, crossoverType, null);
                                 long endTime = System.currentTimeMillis();
                                 long duration = endTime - startTime;

@@ -11,17 +11,18 @@ public class Main {
 
         String filePath = chooseProblemFile(scanner);
         TestProblem testProblem = TestProblem.readFromFile(filePath);
+        System.out.println(testProblem.toString());
         Bag bag = new Bag(testProblem.getCosts(), testProblem.getValues(), testProblem.getMaximumCost());
 
         String mutationMethod = chooseMutationMethod(scanner);
         String crossoverType = chooseCrossoverType(scanner);
 
-        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
-        Bag solutionOptimale = algo.solve(0.7, 0.5, mutationMethod, crossoverType, null);
+        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 150);
+        Bag solutionOptimale = algo.solve(0.3, 0.3, mutationMethod, crossoverType, null);
 
         System.out.println("\nSolution optimale trouvée :");
         System.out.println(solutionOptimale);
-        System.out.println(algo.optiFindAt);
+        System.out.println("opti : " + algo.optiFindAt);
 
         scanner.close();
     }

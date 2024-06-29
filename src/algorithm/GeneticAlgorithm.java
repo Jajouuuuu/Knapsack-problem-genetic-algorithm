@@ -261,9 +261,9 @@ public class GeneticAlgorithm {
                 progressCallback.accept(cmp, newPopulation);
             }
             population = newPopulation;
-            stop = (population.getBest().cost.stream().mapToInt(Integer::intValue).sum() >= population.getBest().value ||  cmp >= 500);
+            stop = (population.getBest().cost.stream().mapToInt(Integer::intValue).sum() >= population.getBest().value ||  cmp >= 100);
             // TODO : Attention ici c'est juste pour nos check ! ça permets de savoir exactement à quelle itérations on trouve l'opti comme on connait notre résultat à trouver
-            if(population.getBest().value == TestProblem.readFromFile("src/testsCases/mknap2.txt").getOptimal() && !optimalFound){
+            if(population.getBest().value == TestProblem.readFromFile("src/testsCases/mknap3.txt").getOptimal() && !optimalFound){
                 this.optiFindAt = cmp;
                 optimalFound = true;
             }
