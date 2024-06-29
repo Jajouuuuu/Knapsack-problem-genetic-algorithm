@@ -66,16 +66,16 @@ public class ResultCSV {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         // Chemin pour l'enregistrement du CSV
-        ResultCSV resultCSV = new ResultCSV("new_results_pop_350_2.csv");
+        ResultCSV resultCSV = new ResultCSV("new_results_pop_50_3.csv");
 
         // Création d'une instance du problème
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
         Bag bag = new Bag(testProblem.getCosts(), testProblem.getValues(), testProblem.getMaximumCost());
 
-        List<Double> elitismRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
-        List<Double> mutationRates = Arrays.asList(0.1, 0.2, 0.3, 0.4, 0.5);
-        List<String> crossoverTypes = Arrays.asList("uniformCrossover", "singlePointCrossover", "twoPointCrossover");
-        List<String> mutationTypes = Arrays.asList("flipMutation", "swapMutation", "scrambleMutation", "inversionMutation");
+        List<Double> elitismRates = Arrays.asList(0.2, 0.3, 0.4, 0.5);
+        List<Double> mutationRates = Arrays.asList(0.05, 0.1, 0.15, 0.2);
+        List<String> crossoverTypes = Arrays.asList("singlePointCrossover", "twoPointCrossover");
+        List<String> mutationTypes = Arrays.asList("scrambleMutation", "inversionMutation");
 
         int numThreads = Runtime.getRuntime().availableProcessors() * 2;
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
@@ -87,7 +87,7 @@ public class ResultCSV {
                         executorService.submit(() -> {
                             try {
                                 long startTime = System.currentTimeMillis();
-                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 350);
+                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
                                 Bag solutionOptimale = algo.solve(elitismRate, mutationRate, mutationType, crossoverType, null);
                                 long endTime = System.currentTimeMillis();
                                 long duration = endTime - startTime;
