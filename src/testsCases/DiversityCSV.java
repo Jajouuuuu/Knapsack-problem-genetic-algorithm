@@ -72,8 +72,7 @@ public class DiversityCSV {
         // Valeur des paramètres à tester
         List<Double> elitismRates = Arrays.asList(0.05, 0.10, 0.15, 0.20, 0.25, 0.3, 0.4, 0.5);
         List<Double> mutationRates = Arrays.asList(0.2, 0.4, 0.6, 0.8);
-        // TODO : si on vire le crossover il faut update ici
-        List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
+        List<String> crossoverTypes = Arrays.asList("uniformCrossover", "singlePointCrossover", "twoPointCrossover");
         List<String> mutationTypes = Arrays.asList("flipMutation", "swapMutation", "scrambleMutation", "inversionMutation");
 
         for (double elitismRate : elitismRates) {

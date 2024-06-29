@@ -92,28 +92,23 @@ public class Main {
         return mutationMethod;
     }
 
-    // TODO : il faut retirer aussi le crossover ici du coup ?
     private static String chooseCrossoverType(Scanner scanner) {
         System.out.println("\nChoix du type de croisement :");
-        System.out.println("1. crossover");
-        System.out.println("2. singlePointCrossover");
-        System.out.println("3. twoPointCrossover");
-        System.out.println("4. uniformCrossover");
+        System.out.println("1. singlePointCrossover");
+        System.out.println("2. twoPointCrossover");
+        System.out.println("3. uniformCrossover");
 
-        System.out.print("Choisissez le type de croisement (1-4) : ");
+        System.out.print("Choisissez le type de croisement (1-3) : ");
         int crossoverChoice = scanner.nextInt();
         String crossoverType;
         switch (crossoverChoice) {
             case 1:
-                crossoverType = "crossover";
-                break;
-            case 2:
                 crossoverType = "singlePointCrossover";
                 break;
-            case 3:
+            case 2:
                 crossoverType = "twoPointCrossover";
                 break;
-            case 4:
+            case 3:
                 crossoverType = "uniformCrossover";
                 break;
             default:

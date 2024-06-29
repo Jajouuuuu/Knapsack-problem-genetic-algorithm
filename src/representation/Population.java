@@ -103,8 +103,8 @@ public class Population {
                     }
                 }
                 // Repair the bag if it's not valid after the mutation
-                if (!bag.isValid(maximumCost)) {
-                    bag.reparation(maximumCost);
+                if (!bag.isValid()) {
+                    bag.reparation();
                 }
             }
         }
@@ -140,8 +140,8 @@ public class Population {
                     bag.addBagObject(index1);
                 }
                 // Repair the bag if it's not valid after the mutation
-                if (!bag.isValid(maximumCost)) {
-                    bag.reparation(maximumCost);
+                if (!bag.isValid()) {
+                    bag.reparation();
                 }
             }
         }
@@ -187,8 +187,8 @@ public class Population {
                     }
                 }
                 // Repair the bag si c'est pas un bag valid après la mutation
-                if (!bag.isValid(maximumCost)) {
-                    bag.reparation(maximumCost);
+                if (!bag.isValid()) {
+                    bag.reparation();
                 }
             }
         }
@@ -234,8 +234,8 @@ public class Population {
                     }
                 }
                 // Repair the bag if it's not valid after the mutation
-                if (!bag.isValid(maximumCost)) {
-                    bag.reparation(maximumCost);
+                if (!bag.isValid()) {
+                    bag.reparation();
                 }
             }
         }

@@ -6,9 +6,11 @@ import java.util.List;
  * Classe représentant un objet de sac à dos.
  */
 public class BagObject {
-    // TODO : maybe refacto les noms d'attributs ou bien les commentés (je confond un peu les attributs donc je veux pas trop faire de la D)
+    //Indice de l'objet dans la liste de tous les objets existant dans le problème
     protected int id;
+    //Liste des coûts pour chacun des contraintes
     protected List<Integer> cost;
+    //Valeur de l'objet
     public int value;
 
     /**

@@ -45,33 +45,6 @@ public class GeneticAlgorithm {
         System.out.println(this.populationSize);
     }
 
-    // TODO : je crois que lui on peut le virer non c'était pas ça l'uniform crossover ? @PepperMint5
-    /**
-     * Effectue un croisement entre les couples de parents.
-     *
-     * @param parents les couples de parents
-     * @return une nouvelle population résultant du croisement
-     */
-    public Population crossover(ArrayList<Couple> parents) {
-        Population res = new Population();
-        for (Couple parent : parents) {
-            Bag child1 = new Bag();
-            Bag child2 = new Bag();
-            for (int j = 0; j < parents.get(0).father.content.size(); j++) {
-                if (Math.random() < 0.5) {
-                    child1.addBagObject(parent.father.content.get(j));
-                    child2.addBagObject(parent.mother.content.get(j));
-                } else {
-                    child1.addBagObject(parent.mother.content.get(j));
-                    child2.addBagObject(parent.father.content.get(j));
-                }
-            }
-            res.add(child1);
-            res.add(child2);
-        }
-        return res;
-    }
-
     /**
      * Effectue un croisement à un point (Single-point crossover).
      * Il s'agit d'une des méthodes les plus simples et
@@ -188,8 +161,6 @@ public class GeneticAlgorithm {
      */
     private Population applyCrossover(String crossOver) {
         switch (crossOver) {
-            case "crossover":
-                return crossover(selection());
             case "singlePointCrossover":
                 return singlePointCrossover(selection());
             case "twoPointCrossover":
@@ -249,8 +220,8 @@ public class GeneticAlgorithm {
             newPopulation = applyCrossover(crossOver);
             applyMutation(newPopulation, mutationMethod, mutationFactor);
             for (int i = 0; i < newPopulation.size(); i++) {
-                if (!newPopulation.get(i).isValid(Bag.maximumCost)) {
-                    newPopulation.get(i).reparation(Bag.maximumCost);
+                if (!newPopulation.get(i).isValid()) {
+                    newPopulation.get(i).reparation();
                 }
             }
             Iterator<Bag> it = this.population.iterator();

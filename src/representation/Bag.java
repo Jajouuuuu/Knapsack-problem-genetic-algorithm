@@ -125,10 +125,9 @@ public class Bag implements Comparable<Bag> {
 
     /**
      * Répare un sac en retirant les objets non valides et en ajoutant des objets valides.
-     *
-     * @param maximumCost Liste des coûts maximums autorisés
+
      */
-    public void reparation(List<Integer> maximumCost) {
+    public void reparation() {
         List<Integer> indices = new ArrayList<>();
         for (int i = 0; i < this.content.size(); i++) {
             indices.add(i);
@@ -137,8 +136,6 @@ public class Bag implements Comparable<Bag> {
                 bagObjects.get(b).value,
                 bagObjects.get(a).value
         ));
-        // TODO : je sais pas si on laisse le commentaire ?
-        // c'est comme le répare qu'il y a dans mutation.
         for (int i = indices.size() - 1; i >= 0; i--) {
             if (this.content.get(indices.get(i)) == 1 && !this.isValid(maximumCost)) {
                 this.removeBagObject(indices.get(i));
@@ -179,10 +176,9 @@ public class Bag implements Comparable<Bag> {
     /**
      * Vérifie si le sac est valide en comparant les coûts aux coûts maximums autorisés.
      *
-     * @param maximumCost Liste des coûts maximums autorisés
      * @return vrai si le sac est valide, faux sinon
      */
-    public boolean isValid(List<Integer> maximumCost) {
+    public boolean isValid() {
         for (int i = 0; i < costDimension(); i++) {
             if (this.cost.get(i) > maximumCost.get(i)) {
                 return false;

@@ -74,7 +74,7 @@ public class ResultCSV {
 
         List<Double> elitismRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
         List<Double> mutationRates = Arrays.asList(0.1, 0.15, 0.2, 0.25);
-        List<String> crossoverTypes = Arrays.asList("crossover", "singlePointCrossover", "twoPointCrossover");
+        List<String> crossoverTypes = Arrays.asList("uniformCrossover", "singlePointCrossover", "twoPointCrossover");
         List<String> mutationTypes = Arrays.asList("scrambleMutation", "inversionMutation");
 
         int numThreads = Runtime.getRuntime().availableProcessors() * 2;
