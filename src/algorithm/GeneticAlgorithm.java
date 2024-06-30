@@ -15,7 +15,7 @@ import testsCases.TestProblem;
 public class GeneticAlgorithm {
 
     // TODO : faudrait revoir nos visibilités, j'ai mit pas mal de chose en public jsp si c'ets une bonne chose ?
-    public List<Integer> values;
+
     public Population population;
     public int populationSize;
     public int iterations;
@@ -29,11 +29,7 @@ public class GeneticAlgorithm {
      * @param k taille de la population
      */
     public GeneticAlgorithm(Bag bag, int k) {
-        this.values = new ArrayList<>();
         this.bag = bag;
-        for (BagObject obj : Bag.bagObjects) {
-            this.values.add(obj.value);
-        }
         this.populationSize = 2 * k;
         this.iterations = 0;
         this.population = new Population();
@@ -271,12 +267,12 @@ public class GeneticAlgorithm {
 
     @Override
     public String toString() {
-        return "algorithm.GeneticAlgorithm{" +
-                "values=" + values +
-                ", costs=" + Bag.maximumCost +
-                ", BagObjects=" + Bag.bagObjects +
-                ", population=" + population +
+        return "GeneticAlgorithm{" +
+                "population=" + population +
                 ", populationSize=" + populationSize +
+                ", iterations=" + iterations +
+                ", bag=" + bag +
+                ", optiFindAt=" + optiFindAt +
                 '}';
     }
 }
