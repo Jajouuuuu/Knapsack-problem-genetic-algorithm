@@ -1,0 +1,21 @@
+Iteration,Best Fitness,Elitism Rate,Mutation Rate,Population Size,Crossover Type,Mutation Type,Duration (ms),Opti Find At
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 642093, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 645471, 0
+200, 10618.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 645690, 113
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 646015, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 646995, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 647009, 0
+200, 10618.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 647051, 146
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 647311, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 647895, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 648038, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 648110, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 648347, 0
+200, 10618.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 648545, 161
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 649186, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 650172, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 650331, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 650505, 0
+200, 10604.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 651028, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 651466, 0
+200, 10605.00, 0.50, 0.15, 700, singlePointCrossover, scrambleMutation, 652461, 0

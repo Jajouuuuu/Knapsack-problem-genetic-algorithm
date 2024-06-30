@@ -25,7 +25,7 @@ public class ResultCSV {
      */
     public ResultCSV(String filePath) throws IOException {
         fileWriter = new FileWriter(filePath);
-        fileWriter.append("Iteration, Best Fitness,Elitisme Rate, Mutation Rate, Population Size, Crossover Type, Mutation Type, Duration (ms), Opti Find At\n");
+        fileWriter.append("Iteration,Best Fitness,Elitism Rate,Mutation Rate,Population Size,Crossover Type,Mutation Type,Duration (ms),Opti Find At\n");
     }
 
     /**
@@ -66,7 +66,7 @@ public class ResultCSV {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         // Chemin pour l'enregistrement du CSV
-        ResultCSV resultCSV = new ResultCSV("results_nouvelle_version_algo_test_pop_100.csv");
+        ResultCSV resultCSV = new ResultCSV("results_test_3_pop_100.csv");
 
         // Création d'une instance du problème
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
@@ -87,7 +87,7 @@ public class ResultCSV {
                         executorService.submit(() -> {
                             try {
                                 long startTime = System.currentTimeMillis();
-                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 50);
+                                GeneticAlgorithm algo = new GeneticAlgorithm(bag, 100);
                                 Bag solutionOptimale = algo.solve(elitismRate, mutationRate, mutationType, crossoverType, null);
                                 long endTime = System.currentTimeMillis();
                                 long duration = endTime - startTime;
