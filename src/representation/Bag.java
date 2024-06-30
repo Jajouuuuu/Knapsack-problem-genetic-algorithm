@@ -137,7 +137,7 @@ public class Bag implements Comparable<Bag> {
                 bagObjects.get(a).value
         ));
         for (int i = indices.size() - 1; i >= 0; i--) {
-            if (this.content.get(indices.get(i)) == 1 && !this.isValid(maximumCost)) {
+            if (this.content.get(indices.get(i)) == 1 && !this.isValid()) {
                 this.removeBagObject(indices.get(i));
             }
         }
