@@ -11,7 +11,7 @@ Ce projet implémente un algorithme génétique pour résoudre le problème du s
 Clonez ce dépôt :
 
 ``` 
-git clone https://github.com/votre-utilisateur/algorithme-genetique-mkp.git
+git clone [https://github.com/votre-utilisateur/algorithme-genetique-mkp.git](https://github.com/Jajouuuuu/Knapsack-problem-genetic-algorithm.git)
 cd algorithme-genetique-mkp
 ```
 
