@@ -12,7 +12,7 @@ Clonez ce dépôt :
 
 ``` 
 git clone https://github.com/Jajouuuuu/Knapsack-problem-genetic-algorithm.git
-cd algorithme-genetique-mkp
+cd Knapsack-problem-genetic-algorithm
 ```
 
 Importez le projet dans votre environnement de développement Java préféré.
