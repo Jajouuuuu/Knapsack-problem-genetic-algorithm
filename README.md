@@ -1,4 +1,4 @@
-# Algorithme Génétique : Problème du Sac à Dos Multidimensionnel
+# Algorithme génétique : problème du sac à dos multidimensionnel
 
 Ce projet implémente un algorithme génétique pour résoudre le problème du sac à dos multidimensionnel (MKP). Le but est de sélectionner un ensemble d'objets d'utilité maximale sous diverses contraintes de coûts.
 
