@@ -14,13 +14,12 @@ import testsCases.TestProblem;
  */
 public class GeneticAlgorithm {
 
-    // TODO : faudrait revoir nos visibilités, j'ai mit pas mal de chose en public jsp si c'ets une bonne chose ?
-
     public Population population;
     public int populationSize;
     public int iterations;
     public Bag bag;
     public int optiFindAt;
+    public String filePath = "";
 
     /**
      * Constructeur de l'algorithme génétique.
@@ -229,7 +228,16 @@ public class GeneticAlgorithm {
             }
             population = newPopulation;
             stop = (population.getBest().cost.stream().mapToInt(Integer::intValue).sum() >= population.getBest().value ||  cmp >= 500);
-            // TODO : Attention ici c'est juste pour nos check ! ça permets de savoir exactement à quelle itérations on trouve l'opti comme on connait notre résultat à trouver
+
+
+            //Permet de récupérer l'itération à laquelle on a trouvé l'optimal pour l'analyse
+            //Uniquement si on fait tourné un test issu de l'un des fichiers tests
+            if(!Objects.equals(filePath, "")){
+                if(population.getBest().value == TestProblem.readFromFile(filePath).getOptimal() && !optimalFound){
+                    this.optiFindAt = cmp;
+                    optimalFound = true;
+                }
+            }
             if(population.getBest().value == TestProblem.readFromFile("src/testsCases/mknap2.txt").getOptimal() && !optimalFound){
                 this.optiFindAt = cmp;
                 optimalFound = true;

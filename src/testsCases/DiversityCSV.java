@@ -68,7 +68,6 @@ public class DiversityCSV {
         TestProblem testProblem = TestProblem.readFromFile("src/testsCases/mknap3.txt");
         Bag bag = new Bag(testProblem.getCosts(), testProblem.getValues(), testProblem.getMaximumCost());
 
-        // TODO : je suis pas sur d'avoir tester avec les bons paramètre ici
         // Valeur des paramètres à tester
         List<Double> elitismRates = Arrays.asList(0.05, 0.10, 0.15, 0.20, 0.25, 0.3, 0.4, 0.5);
         List<Double> mutationRates = Arrays.asList(0.2, 0.4, 0.6, 0.8);
