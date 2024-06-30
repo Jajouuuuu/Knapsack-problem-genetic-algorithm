@@ -22,7 +22,7 @@ public class Main {
 
         System.out.println("\nSolution optimale trouvée :");
         System.out.println(solutionOptimale);
-        System.out.println(algo.optiFindAt);
+        System.out.println("Optimal find at iteration: " + algo.optiFindAt);
 
         scanner.close();
     }
