@@ -17,8 +17,8 @@ public class Main {
         String mutationMethod = chooseMutationMethod(scanner);
         String crossoverType = chooseCrossoverType(scanner);
 
-        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 150);
-        Bag solutionOptimale = algo.solve(0.3, 0.3, mutationMethod, crossoverType, null);
+        GeneticAlgorithm algo = new GeneticAlgorithm(bag, 200);
+        Bag solutionOptimale = algo.solve(0.5, 0.15, mutationMethod, crossoverType, null);
 
         System.out.println("\nSolution optimale trouvée :");
         System.out.println(solutionOptimale);

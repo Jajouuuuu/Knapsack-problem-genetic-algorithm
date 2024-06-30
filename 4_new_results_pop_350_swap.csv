@@ -1,0 +1,10 @@
+Iteration,Best Fitness,Elitism Rate,Mutation Rate,Population Size,Crossover Type,Mutation Type,Duration (ms),Opti Find At
+100, 10585.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 29907, 0
+100, 10589.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 30334, 0
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 30516, 0
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 30980, 0
+100, 10618.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 31738, 73
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 31893, 0
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 32098, 0
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 32106, 0
+100, 10588.00, 0.30, 0.15, 700, twoPointCrossover, scrambleMutation, 32111, 0
